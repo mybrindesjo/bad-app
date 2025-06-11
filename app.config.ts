@@ -2,7 +2,6 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    // ...existing expo config...
     extra: {
       firebaseApiKey: process.env.FIREBASE_API_KEY,
       firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,

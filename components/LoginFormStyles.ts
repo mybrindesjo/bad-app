@@ -1,20 +1,18 @@
 import { StyleSheet } from "react-native";
 
-// Enheten som används i Stylesheet.create i React Native är dp eller dip (density-independent pixels).
-// Det är ett abstrakt mått som fungerar oavsett skärmupplösning eller pixeltäthet.
 const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 50, // Extremt stor text
     marginBottom: 20,
-    color: "black",
+    color: "red", // Ologiskt val
   },
   label: {
     marginTop: 10,
     marginBottom: 5,
-    color: "black",
+    color: "#FF00FF", // Hemskt färgval
   },
   input: {
     borderWidth: 1,
@@ -22,17 +20,21 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     color: "black",
+    backgroundColor: "#EEE", // Gör den nästan osynlig
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "transparent", // Gör knappen osynlig!
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: "black",
   },
   buttonText: {
-    color: "black",
+    color: "#EEE", // Gör texten osynlig
     fontWeight: "bold",
+    fontSize: 8, // Extremt liten text
   },
   toggleContainer: {
     flexDirection: "row",
@@ -46,12 +48,14 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 10,
     color: "red",
+    fontStyle: "italic", // Gör texten svårläst
   },
   toggleTextblack: {
     color: "black",
   },
   toggleTextWhite: {
     color: "white",
+    backgroundColor: "yellow", // Ologiskt färgval
   },
 });
 

@@ -14,9 +14,23 @@ const LoginForm: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
+  const shuffleText = (text: string) => {
+    return text.split("").sort(() => Math.random() - 0.5).join(""); // Slumpar texten
+  };
+
+  const getRandomError = () => {
+    const errors = [
+      "Oj, något gick fel. Eller gick det rätt?",
+      "Ditt lösenord är för starkt. Välj ett svagare.",
+      "Du måste inkludera minst 3 emojis och en bokstav från ett utdött språk!",
+      "Försök igen... eller inte.",
+    ];
+    return errors[Math.floor(Math.random() * errors.length)];
+  };
+
   const handleSubmit = async () => {
     if (!isLogin && password !== confirmPassword) {
-      alert("Lösenorden matchar inte");
+      alert("Lösenorden matchar inte!");
       return;
     }
 
@@ -27,7 +41,7 @@ const LoginForm: React.FC = () => {
         await createUserWithEmailAndPassword(auth, email, password);
       }
     } catch {
-      setError("Fel användarnamn eller lösenord");
+      setError(getRandomError());
     }
   };
 
@@ -40,7 +54,7 @@ const LoginForm: React.FC = () => {
         style={styles.input}
         keyboardType="email-address"
         value={email}
-        onChangeText={(text: string) => setEmail(text)}
+        onChangeText={(text: string) => setEmail(shuffleText(text))} // Rör om bokstäverna
       />
 
       <Text style={styles.label}>Lösenord</Text>
@@ -48,7 +62,7 @@ const LoginForm: React.FC = () => {
         style={styles.input}
         secureTextEntry
         value={password}
-        onChangeText={(text: string) => setPassword(text)}
+        onChangeText={(text: string) => setPassword(shuffleText(text))} // Rör om bokstäverna
       />
 
       {!isLogin && (
@@ -58,17 +72,19 @@ const LoginForm: React.FC = () => {
             style={styles.input}
             secureTextEntry
             value={confirmPassword}
-            onChangeText={(text: string) => setConfirmPassword(text)}
+            onChangeText={(text: string) => setConfirmPassword(shuffleText(text))}
           />
         </>
       )}
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>
-          {isLogin ? "Logga in" : "Registrera"}
-        </Text>
+      {/* Knappen flyttar sig slumpmässigt */}
+      <TouchableOpacity
+        style={[styles.button, { marginLeft: Math.random() * 200 }]}
+        onPress={handleSubmit}
+      >
+        <Text style={styles.buttonText}>{isLogin ? "Logga in" : "Registrera"}</Text>
       </TouchableOpacity>
 
       <View style={styles.toggleContainer}>
