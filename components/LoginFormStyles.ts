@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
   toggleTextblack: {
     color: "black",
   },
+  toggleTextWhite: {
+    color: "white",
+  },
 });
 
 export default styles;

@@ -11,6 +11,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "components/LoginForm.jsx"
+    "components/LoginForm.tsx"
   ]
 }

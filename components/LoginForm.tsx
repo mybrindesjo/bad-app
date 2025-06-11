@@ -5,15 +5,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase-config";
-
 import styles from "./LoginFormStyles";
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
-  const [error, setError] = useState("");
+const LoginForm: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   const handleSubmit = async () => {
     if (!isLogin && password !== confirmPassword) {
@@ -41,8 +40,7 @@ const LoginForm = () => {
         style={styles.input}
         keyboardType="email-address"
         value={email}
-        onChangeText={(text) => setEmail(text)}
-        required
+        onChangeText={(text: string) => setEmail(text)}
       />
 
       <Text style={styles.label}>Lösenord</Text>
@@ -50,8 +48,7 @@ const LoginForm = () => {
         style={styles.input}
         secureTextEntry
         value={password}
-        onChangeText={(text) => setPassword(text)}
-        required
+        onChangeText={(text: string) => setPassword(text)}
       />
 
       {!isLogin && (
@@ -61,8 +58,7 @@ const LoginForm = () => {
             style={styles.input}
             secureTextEntry
             value={confirmPassword}
-            onChangeText={(text) => setConfirmPassword(text)}
-            required
+            onChangeText={(text: string) => setConfirmPassword(text)}
           />
         </>
       )}
