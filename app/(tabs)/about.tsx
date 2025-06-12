@@ -4,9 +4,7 @@ export default function AboutScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>About screen</Text>
-        <Text style={styles.text}>This is a bad app example.</Text>
-        <Text style={styles.text}>It is not following best practices.</Text>
-        <Text style={styles.text}>Please do not use this as a reference.</Text>
+        
     </View>
   );
 }
