@@ -1,4 +1,4 @@
-import LoginForm from "../../components/LoginForm";
+import OnboardingScreen from "../../components/OnboardingScreen";
 import { Text, View } from "react-native";
 
 
@@ -11,6 +11,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <OnboardingScreen />
       
     </View>
   );
