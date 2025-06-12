@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     padding: 3, // Minimalt utrymme att skriva
     borderRadius: 10, // Ologiskt små rundade hörn
     color: "#ff4444",
-    width: "50%", // Begränsad bredd för maximal irritation
     fontSize: 8, // Nästan omöjligt att läsa
   },
   passwordContainer: {
