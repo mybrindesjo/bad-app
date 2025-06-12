@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Animated } from "react-native";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase-config";
-import styles from "./LoginFormStyles";
+import { useRouter } from "expo-router";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -14,23 +11,23 @@ const LoginForm: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const shuffleText = (text: string) => {
-    return text.split("").sort(() => Math.random() - 0.5).join(""); // Slumpar texten
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
+  const router = useRouter();
+  
+  // Förflyttning av login-knappen
+  const buttonAnimation = new Animated.Value(0);
+
+  const handleButtonPress = () => {
+    Animated.timing(buttonAnimation, {
+      toValue: Math.random() * 300, // Flyttar knappen slumpmässigt
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   };
 
-  const getRandomError = () => {
-    const errors = [
-      "Oj, något gick fel. Eller gick det rätt?",
-      "Ditt lösenord är för starkt. Välj ett svagare.",
-      "Du måste inkludera minst 3 emojis och en bokstav från ett utdött språk!",
-      "Försök igen... eller inte.",
-    ];
-    return errors[Math.floor(Math.random() * errors.length)];
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     if (!isLogin && password !== confirmPassword) {
-      alert("Lösenorden matchar inte!");
+      Alert.alert("Fel", "Lösenorden matchar inte");
       return;
     }
 
@@ -40,8 +37,9 @@ const LoginForm: React.FC = () => {
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
       }
+      router.push("/profile");
     } catch {
-      setError(getRandomError());
+      setError("Fel användarnamn eller lösenord");
     }
   };
 
@@ -49,20 +47,21 @@ const LoginForm: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>{isLogin ? "Logga in" : "Skapa konto"}</Text>
 
-      <Text style={styles.label}>E-post</Text>
+      <Text style={styles.label}>E-post (Lycka till att läsa detta!)</Text>
       <TextInput
         style={styles.input}
         keyboardType="email-address"
         value={email}
-        onChangeText={(text: string) => setEmail(shuffleText(text))} // Rör om bokstäverna
+        onChangeText={setEmail}
+        autoCapitalize="none"
       />
 
-      <Text style={styles.label}>Lösenord</Text>
+      <Text style={styles.label}>Lösenord (Skriv det rätt... kanske!)</Text>
       <TextInput
         style={styles.input}
         secureTextEntry
         value={password}
-        onChangeText={(text: string) => setPassword(shuffleText(text))} // Rör om bokstäverna
+        onChangeText={setPassword}
       />
 
       {!isLogin && (
@@ -72,20 +71,24 @@ const LoginForm: React.FC = () => {
             style={styles.input}
             secureTextEntry
             value={confirmPassword}
-            onChangeText={(text: string) => setConfirmPassword(shuffleText(text))}
+            onChangeText={setConfirmPassword}
           />
         </>
       )}
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      {/* Knappen flyttar sig slumpmässigt */}
-      <TouchableOpacity
-        style={[styles.button, { marginLeft: Math.random() * 200 }]}
-        onPress={handleSubmit}
-      >
-        <Text style={styles.buttonText}>{isLogin ? "Logga in" : "Registrera"}</Text>
-      </TouchableOpacity>
+      <Animated.View style={[styles.buttonContainer, { transform: [{ translateX: buttonAnimation }] }]}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+          onPressIn={handleButtonPress} // Knappen flyttar sig när du försöker trycka på den
+        >
+          <Text style={styles.buttonText}>
+            {isLogin ? "Logga in" : "Registrera"}
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
 
       <View style={styles.toggleContainer}>
         <Text style={styles.toggleTextWhite}>
@@ -100,5 +103,60 @@ const LoginForm: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: "#222", // Svart bakgrund för maximal irritation
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 10,
+    color: "#ff0000", // Röd text på mörk bakgrund
+  },
+  label: {
+    marginTop: 10,
+    marginBottom: 5,
+    color: "#ffcc00", // Svår att läsa färg
+    fontSize: 12, // Gör texten extra liten
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ff0000", // Ologisk färg
+    padding: 10,
+    borderRadius: 5,
+    color: "#fff",
+    backgroundColor: "#444", // Mörk bakgrund på inputfält
+  },
+  buttonContainer: {
+    marginTop: 15,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: "#ff0000", // Irriterande färg
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  toggleContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  toggleTextWhite: {
+    color: "#fff",
+    marginRight: 5,
+  },
+  toggleText: {
+    color: "#007bff",
+  },
+  error: {
+    color: "red",
+    marginTop: 10,
+  },
+});
 
 export default LoginForm;

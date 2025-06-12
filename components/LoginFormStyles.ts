@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
     color: "white",
     backgroundColor: "yellow", // Ologiskt färgval
   },
+  disabledButton: {
+    backgroundColor: "#ccc",
+  },
 });
 
 export default styles;

@@ -1,4 +1,4 @@
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../../components/LoginForm";
 import { Text, View } from "react-native";
 
 
