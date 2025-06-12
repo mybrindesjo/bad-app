@@ -1,18 +1,35 @@
-import React from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
+import LoginForm from "../../components/LoginForm";
 
 const ProfileScreen: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <Text style={styles.loading}>Laddar...</Text>;
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Profilinställningar</Text>
-      <TextInput 
-        style={styles.input} 
-        placeholder="Skriv ditt namn... men det sparas aldrig"
-      />
-      <Button 
-        title="Spara" 
-        onPress={() => Alert.alert('Hoppsan!', 'Oops, det gick inte att spara.')}
-      />
+      {user ? (
+        <>
+          <Text style={styles.text}>Välkommen {user.email}!</Text>
+          <Text style={styles.subtext}>Här är din profilsida.</Text>
+        </>
+      ) : (
+        <LoginForm />
+      )}
     </View>
   );
 };
@@ -20,19 +37,23 @@ const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
     padding: 20,
-    backgroundColor: '#f8d7da',
   },
-  header: {
+  loading: {
+    fontSize: 18,
+    color: "#888",
+  },
+  text: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    color: "#000",
   },
-  input: {
-    borderWidth: 2,
-    borderColor: '#ff0000',
-    padding: 10,
-    marginTop: 10,
-    backgroundColor: '#ffe6e6',
+  subtext: {
+    fontSize: 16,
+    color: "#555",
   },
 });
 
