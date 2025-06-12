@@ -1,18 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
 
 const mandatoryQuestions = [
-  "Vad är din favoritfärg på en tisdagseftermiddag?",
-  "Om du var ett köksredskap, vilket skulle du vara?",
+  { 
+    question: "Vad är din favoritfärg på en tisdagseftermiddag?",
+    options: ["Blå", "Röd", "Grön", "Gul"],
+  },
+  { 
+    question: "Om du var ett köksredskap, vilket skulle du vara?",
+    options: ["Kniv", "Gaffel", "Visp", "Brödrost"],
+  },
+  { 
+    question: "Hur många gånger har du blinkat idag?",
+    options: ["10", "100", "1000", "Jag har aldrig blinkat"],
+  },
+  { 
+    question: "Vilken låt lyssnade du på idag?",
+    options: ["Bohemian Rhapsody", "Despacito", "Never Gonna Give You Up", "Baby Shark"],
+  },
+  { 
+    question: "Om du fick välja mellan ost och tomat – varför?",
+    options: ["Ost är kung!", "Tomat är liv!", "Ingen av dem", "Allt på en pizza"],
+  },
+  { 
+    question: "Skriv en dikt om en osynlig giraff.",
+    options: ["Den är lång och smal", "Den finns inte alls", "Den springer genom natten", "Den dricker kaffe"],
+  }
+];
+
+const fakeAnswers = [
+  "Neonrosa",
+  "Slev",
+  "5000 gånger",
+  "Nationalsången",
+  "Jag vägrar svara på denna fråga",
+  "Jag har aldrig sett en giraff"
 ];
 
 const ProfileScreen: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [answers, setAnswers] = useState(Array(mandatoryQuestions.length).fill(""));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
 
@@ -31,7 +61,7 @@ const ProfileScreen: React.FC = () => {
       } else {
         setQuestionComplete(true);
       }
-    }, 2000); // Fördröjning på varje svar
+    }, 2000);
   };
 
   if (loading) {
@@ -43,26 +73,22 @@ const ProfileScreen: React.FC = () => {
       {user ? (
         <>
           {!questionComplete ? (
-            <>
-              <Text style={styles.progress}>
-                {currentQuestionIndex + 1} frågor besvarade
-              </Text>
-              <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex]}</Text>
-              <TextInput
-                style={styles.input}
-                value={answers[currentQuestionIndex]}
-                onChangeText={(text) => {
-                  const updatedAnswers = [...answers];
-                  updatedAnswers[currentQuestionIndex] = text;
-                  setAnswers(updatedAnswers);
-                }}
-              />
-              <Button title="Nästa fråga" onPress={handleNextQuestion} />
-            </>
+            <View style={[styles.questionBox]}>
+              <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex].question}</Text>
+              {mandatoryQuestions[currentQuestionIndex].options.map((option, index) => (
+                <Button key={index} title={option} onPress={handleNextQuestion} />
+              ))}
+            </View>
           ) : (
             <>
-              <Text style={styles.text}>Välkommen {user.email}!</Text>
-              <Text style={styles.subtext}>Grattis! Du har slösat tid på helt meningslösa frågor.</Text>
+              <Text style={styles.text}>Välkommen {user.email}! 👋</Text>
+              <Text style={styles.subtext}>Här är dina svar;</Text>
+              {mandatoryQuestions.map((question, index) => (
+                <View key={index} style={styles.answerBox}>
+                  <Text style={styles.question}>{question.question}</Text>
+                  <Text style={styles.answer}>{fakeAnswers[index]}</Text>
+                </View>
+              ))}
             </>
           )}
         </>
@@ -80,34 +106,48 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     padding: 20,
+    gap: 20,
   },
   loading: {
     fontSize: 18,
     color: "#888",
   },
-  progress: {
-    fontSize: 18,
-    color: "#ff5555", // Gör siffran röd för dramatisk effekt!
-    marginBottom: 10,
+  questionBox: {
+    width: "90%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 20,
+    backgroundColor: "#fffff",
   },
   text: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#000",
     textAlign: "center",
-    marginBottom: 10,
+    backgroundColor: "#f0f0f0",
+    padding: 20,
+    borderRadius: 10,
+    borderBlockColor: "#ccc",
   },
   subtext: {
     fontSize: 16,
     color: "#555",
     textAlign: "center",
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 8,
-    width: "80%",
-    marginBottom: 10,
+  answerBox: {
+    padding: 10,
+    marginVertical: 5,
+    width: "95%",
+    borderRadius: 5,
+    backgroundColor: "#f9f9f9",
+  },
+  question: {
+    fontWeight: "bold",
+    color: "#333",
+  },
+  answer: {
+    color: "#666",
   },
 });
 

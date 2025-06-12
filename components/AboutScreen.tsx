@@ -1,50 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import React, { useEffect } from "react";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router"; // Import måste vara här!
 
-const onboardingTexts = [
-  "Välkommen! Eller?",
-  "Här får du lära dig ingenting.",
-  "Tryck på knappen… eller vänta lite?",
-  "Hoppa över? Nej, vänta! Förresten… kanske?",
-  "Varför är du ens här?",
-  "Nästan klart! Eller är det?",
-  "Sista steget… eller?",
-];
+import Animated, { useSharedValue, withTiming, useAnimatedStyle } from "react-native-reanimated";
 
-export default function OnboardingScreen({ navigation }) {
-  const [step, setStep] = useState(0);
+function AboutScreen() {
+  const router = useRouter();
+
   const opacity = useSharedValue(0);
-  const shake = useSharedValue(0);
+  const scale = useSharedValue(0.5);
 
   useEffect(() => {
-    opacity.value = withTiming(1, { duration: 800 });
-    shake.value = withTiming(10, { duration: 500 });
-  }, [step]);
+    opacity.value = withTiming(1, { duration: 1000 });
+    scale.value = withTiming(1, { duration: 800 });
+  }, []);
 
-  const fadeStyle = useAnimatedStyle(() => ({
+  const fadeInStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
 
-  const shakeStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: Math.sin(shake.value) * 5 }],
+  const scaleStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
   }));
-
-  const handleNext = () => {
-    setStep((prevStep) => (prevStep < onboardingTexts.length - 1 ? prevStep + 1 : 0));
-  };
 
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.text, fadeStyle]}>{onboardingTexts[step]}</Animated.Text>
-      <Animated.View style={shakeStyle}>
-        <Button title="Nästa (eller inte?)" onPress={handleNext} />
+      <Animated.Image source={require("../components/img/picture.png")} style={[styles.logo, scaleStyle]} />
+      <Animated.View style={fadeInStyle}>
+        <Text style={styles.title}>Om vår app</Text>
       </Animated.View>
-      {step > 3 && (
-        <Text style={styles.skipText} onPress={() => navigation.navigate("Home")}>
-          Hoppa över (om du hittar knappen)
-        </Text>
-      )}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+            setTimeout(() => {
+            router.push(Math.random() > 0.5 ? "/" : "/randomPage"); // Slumpmässig navigering
+            }, 5000);
+        }}
+        >
+  <Text style={styles.buttonText}>Tillbaka till start (eller inte?)</Text>
+</TouchableOpacity>
+
     </View>
   );
 }
@@ -52,19 +47,37 @@ export default function OnboardingScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#25292e",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1c1c1c",
+    padding: 20,
   },
-  text: {
-    fontSize: 20,
-    color: "#fff",
+  logo: {
+    width: 100,
+    height: 100,
     marginBottom: 20,
   },
-  skipText: {
-    fontSize: 12,
-    color: "#888",
-    marginTop: 15,
+  title: {
+    fontSize: 24,
+    color: "#fff",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: "#ccc",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: "#ff6666",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
 
+export default AboutScreen;

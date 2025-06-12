@@ -1,33 +1,41 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Animated } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Keyboard } from "react-native";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase-config";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons"; // Importera ikoner
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const isFormValid = email.trim() !== "" && password.trim() !== "";
   const router = useRouter();
-  
-  // Förflyttning av login-knappen
-  const buttonAnimation = new Animated.Value(0);
 
-  const handleButtonPress = () => {
-    Animated.timing(buttonAnimation, {
-      toValue: Math.random() * 300, // Flyttar knappen slumpmässigt
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+  const triggerPopup = () => {
+    if (Math.random() > 0.7) {
+      Alert.alert("Är du säker?", "Vi rekommenderar att du inte registrerar dig.");
+    }
+  };
+
+  // Göra lösenordsfältet synligt eller dolt
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Automatiskt ändra lösenordet när det matas in
+  const handlePasswordChange = (setter: React.Dispatch<React.SetStateAction<string>>, text: string) => {
+    Keyboard.dismiss();
+    triggerPopup();
+    setter(text + "??!"); // Lägg till oönskade tecken
   };
 
   const handleSubmit = async (): Promise<void> => {
     if (!isLogin && password !== confirmPassword) {
-      Alert.alert("Fel", "Lösenorden matchar inte");
+      Alert.alert("Fel", "Lösenorden matchar inte!");
       return;
     }
 
@@ -45,9 +53,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{isLogin ? "Logga in" : "Skapa konto"}</Text>
+      <Text style={styles.title}>{isLogin ? "Logga in" : "Registrera dig"}</Text>
 
-      <Text style={styles.label}>E-post (Lycka till att läsa detta!)</Text>
+      <Text style={styles.label}>E-post</Text>
       <TextInput
         style={styles.input}
         keyboardType="email-address"
@@ -56,39 +64,35 @@ const LoginForm: React.FC = () => {
         autoCapitalize="none"
       />
 
-      <Text style={styles.label}>Lösenord (Skriv det rätt... kanske!)</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <Text style={styles.label}>Lösenord</Text>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.input}
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={(text) => handlePasswordChange(setPassword, text)}
+        />
+      </View>
 
       {!isLogin && (
         <>
           <Text style={styles.label}>Bekräfta lösenord</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={!showPassword}
+              value={confirmPassword}
+              onChangeText={(text) => handlePasswordChange(setConfirmPassword, text)}
+            />
+          </View>
         </>
       )}
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      <Animated.View style={[styles.buttonContainer, { transform: [{ translateX: buttonAnimation }] }]}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit}
-          onPressIn={handleButtonPress} // Knappen flyttar sig när du försöker trycka på den
-        >
-          <Text style={styles.buttonText}>
-            {isLogin ? "Logga in" : "Registrera"}
-          </Text>
-        </TouchableOpacity>
-      </Animated.View>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>{isLogin ? "Logga in" : "Registrera"}</Text>
+      </TouchableOpacity>
 
       <View style={styles.toggleContainer}>
         <Text style={styles.toggleTextWhite}>
@@ -107,35 +111,46 @@ const LoginForm: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: "#222", // Svart bakgrund för maximal irritation
   },
   title: {
     fontSize: 24,
     marginBottom: 10,
-    color: "#ff0000", // Röd text på mörk bakgrund
+    color: "#ff4444",
   },
   label: {
     marginTop: 10,
     marginBottom: 5,
-    color: "#ffcc00", // Svår att läsa färg
-    fontSize: 12, // Gör texten extra liten
+    fontSize: 10, // Extra liten text
+  },
+  emailInput: {
+    borderWidth: 2,
+    borderColor: "#ff4444",
+    padding: 3, // Minimalt utrymme att skriva
+    borderRadius: 10, // Ologiskt små rundade hörn
+    color: "#ff4444",
+    width: "50%", // Begränsad bredd för maximal irritation
+    fontSize: 8, // Nästan omöjligt att läsa
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ff0000", // Ologisk färg
-    padding: 10,
-    borderRadius: 5,
-    color: "#fff",
-    backgroundColor: "#444", // Mörk bakgrund på inputfält
+    borderWidth: 3,
+    borderColor: "#ff4444",
+    padding: 5,
+    borderRadius: 20,
+    color: "#ff4444",
+    flex: 1,
   },
-  buttonContainer: {
-    marginTop: 15,
+  eyeButton: {
+    marginLeft: 10,
   },
   button: {
     padding: 10,
-    backgroundColor: "#ff0000", // Irriterande färg
+    backgroundColor: "#ff4444",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 30,
   },
   buttonText: {
     color: "#fff",
@@ -147,16 +162,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   toggleTextWhite: {
-    color: "#fff",
+    color: "#333",
     marginRight: 5,
   },
   toggleText: {
-    color: "#007bff",
+    color: "#ff4444",
   },
   error: {
     color: "red",
     marginTop: 10,
   },
 });
+
 
 export default LoginForm;
