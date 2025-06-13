@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
 
       <View style={styles.toggleContainer}>
         <Text style={styles.toggleTextWhite}>
-          {isLogin ? "Har du inget konto?" : "Har du redan ett konto?"}
+          {isLogin ? "Har du inget konto? " : "Har du redan ett konto? "}
         </Text>
         <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
           <Text style={styles.toggleText}>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   toggleTextWhite: { 
-    color: "#fff" 
+    color: "#333" 
   }
 });
 
