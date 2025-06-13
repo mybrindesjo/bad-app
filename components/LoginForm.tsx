@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   title: { 
     fontSize: 24, 
     marginBottom: 10, 
-    color: "#ff4444" 
+    color: "#007AFF" 
   },
 
   label: { 
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
   button: { 
     padding: 15, 
-    backgroundColor: "#ff4444", 
+    backgroundColor: "#007AFF", 
     alignItems: "center", 
     borderRadius: 30,
     width: 300,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
 
   toggleText: { 
-    color: "#ff4444", 
+    color: "#007AFF", 
     fontWeight: "bold" 
   },
 
