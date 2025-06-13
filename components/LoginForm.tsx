@@ -1,35 +1,39 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Animated, Keyboard } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Keyboard, Animated } from "react-native";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase-config";
 import { useRouter } from "expo-router";
+import Dropdown from "./DropDownEmail";
+import DropdownPass from "./DropDownPass";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   const router = useRouter();
-  
-  // Slumpmässiga popup-meddelanden
+  const buttonPosition = new Animated.Value(0);
+
   const triggerPopup = () => {
     if (Math.random() > 0.7) {
       Alert.alert("Är du säker?", "Det här kan vara det värsta du gör idag.");
     }
   };
 
-  // Döljer tangentbordet direkt vid inmatning
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, text: string) => {
-    Keyboard.dismiss();
-    triggerPopup();
-    setter(text + "@#!"); // Lägger automatiskt till konstiga tecken i slutet
+  const handleButtonPress = () => {
+    Animated.timing(buttonPosition, {
+      toValue: Math.random() * 200,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   };
 
   const handleSubmit = async (): Promise<void> => {
     if (!isLogin && password !== confirmPassword) {
-      Alert.alert("Fel", "Lösenorden matchar inte");
+      Alert.alert("Fel", "Lösenorden matchar inte!");
       return;
     }
 
@@ -37,95 +41,124 @@ const LoginForm: React.FC = () => {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
       } else {
+        if (!email.includes("@")) {
+          throw new Error("Ogiltig e-postadress!");
+        }
         await createUserWithEmailAndPassword(auth, email, password);
+        Alert.alert("Registrerad!", "Du är nu inloggad.");
       }
       router.push("/profile");
-    } catch {
-      setError("Fel användarnamn eller lösenord");
+    } catch (error) {
+      setError((error as Error).message || "Registrering misslyckades.");
     }
+  };
+
+  function handleInputChange(setState: React.Dispatch<React.SetStateAction<string>>, text: string): void {
+    setState(text);
+  }
+
+  const handleEmailChange = (newEmail: string) => {
+    setEmail(newEmail);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{isLogin ? "Logga in" : "Skapa konto"}</Text>
+      <Text style={styles.title}>{isLogin ? "Logga in" : "Registrera dig"}</Text>
 
-      <Text style={styles.label}>E-post</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="email-address"
-        value={email}
-        onChangeText={(text) => handleInputChange(setEmail, text)}
-        autoCapitalize="none"
-      />
+      <Dropdown onEmailChange={handleEmailChange} />
 
-      <Text style={styles.label}>Lösenord</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => handleInputChange(setPassword, text)}
-      />
-
-      {!isLogin && (
-        <>
-          <Text style={styles.label}>Bekräfta lösenord</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={(text) => handleInputChange(setConfirmPassword, text)}
-          />
-        </>
-      )}
+      <DropdownPass onPasswordChange={(text) => handleInputChange(setPassword, text)} />
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>
-          {isLogin ? "Logga in" : "Registrera"}
+      <Animated.View style={{ transform: [{ translateX: buttonPosition }] }}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit} onPressIn={handleButtonPress}>
+          <Text style={styles.buttonText}>{isLogin ? "Logga in" : "Registrera"}</Text>
+        </TouchableOpacity>
+      </Animated.View>
+
+      <View style={styles.toggleContainer}>
+        <Text style={styles.toggleTextWhite}>
+          {isLogin ? "Har du inget konto?" : "Har du redan ett konto?"}
         </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
+          <Text style={styles.toggleText}>
+            {isLogin ? "Registrera dig här" : "Logga in här"}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: { 
     padding: 20,
+    gap: 10,
+    alignItems: 'center',
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: "#ff4444",
+
+  title: { 
+    fontSize: 24, 
+    marginBottom: 10, 
+    color: "#ff4444" 
   },
-  label: {
-    marginTop: 10,
-    marginBottom: 5,
-    fontSize: 10, // Extra liten text
+
+  label: { 
+    fontSize: 10 
   },
-  input: {
-    borderWidth: 3,
-    borderColor: "#ff4444",
-    padding: 5, // Minimalt utrymme
-    borderRadius: 20, // Ologiskt rundade hörn
-    color: "#ff4444", // Svår att läsa
-    width: 300,
+
+  passwordContainer: { 
+    flexDirection: "row", 
+    alignItems: "center" 
   },
-  button: {
+
+  input: { 
+    borderWidth: 3, 
+    borderColor: "#ff4444", 
     padding: 10,
-    backgroundColor: "#ff4444",
-    alignItems: "center",
-    borderRadius: 30,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: "#fff",
+    paddingHorizontal: 15, 
+    borderRadius: 20, 
+    color: "#ff4444", 
+    width: 300,
+    backgroundColor: '#2a2a2a',
     fontSize: 16,
   },
-  error: {
-    color: "red",
+
+  button: { 
+    padding: 15, 
+    backgroundColor: "#ff4444", 
+    alignItems: "center", 
+    borderRadius: 30,
+    width: 300,
     marginTop: 10,
   },
+
+  buttonText: { 
+    color: "#fff", 
+    fontSize: 16 
+  },
+
+  error: { 
+    color: "red", 
+    marginTop: 10 
+  },
+
+  toggleContainer: { 
+    flexDirection: "row", 
+    justifyContent: "center", 
+    marginTop: 20 
+  },
+
+  toggleText: { 
+    color: "#ff4444", 
+    fontWeight: "bold" 
+  },
+
+  toggleTextWhite: { 
+    color: "#fff" 
+  }
 });
+
 
 export default LoginForm;
