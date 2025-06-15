@@ -10,7 +10,12 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
   const [passwordParts, setPasswordParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  const numbers = Array.from({ length: 10 }, (_, i) => i.toString());
+  // Fixar listan så att ⌫ är först
+  const numbers = [
+     ...Array.from({ length: 10 }, (_, i) => i.toString())
+     , "⌫"
+    
+    ];
 
   useEffect(() => {
     onPasswordChange(passwordParts.join(''));
@@ -18,16 +23,18 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
 
   const handleSelection = (value: string) => {
     setSelectedValue(value);
-    setPasswordParts([...passwordParts, value]);
+    
+    if (value === "⌫") {
+      setPasswordParts((prev) => prev.slice(0, -1)); // Tar bort sista siffran
+    } else {
+      setPasswordParts((prev) => [...prev, value]); // Lägger till vald siffra
+    }
   };
 
   return (
     <View>
       <Text>Ditt lösenord: {'*'.repeat(passwordParts.length)}</Text>
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={handleSelection}
-      >
+      <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
         <Picker.Item label="Välj" value="" />
         {numbers.map((num) => (
           <Picker.Item key={num} label={num} value={num} />
