@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet, Animated } from "react-native";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../firebase/firebase-config";
@@ -17,11 +17,11 @@ const LoginForm: React.FC = () => {
   const router = useRouter();
   const buttonPosition = new Animated.Value(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        router.push("/profile"); // Navigera till profilsidan
+        router.push("/(tabs)");
       }
     });
 
