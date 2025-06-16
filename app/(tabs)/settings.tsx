@@ -1,79 +1,109 @@
-import React, { useState } from "react";
-import { View, Text, Switch, Button, StyleSheet, Alert } from "react-native";
+import React from "react";
+import { View, Text, Button, StyleSheet, Alert, Switch } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useSettings } from "../../context/SettingsContext";
 
 const colors = ["Röd", "Blå", "Grön", "Gul", "Lila", "Rosa"];
-const wrongColors = ["Blå", "Grön", "Röd", "Lila", "Gul", "Rosa"]; // Fel färg visas
-
 const languages = ["Svenska", "Engelska", "Spanska", "Japanska"];
-const volumeLevels = ["Låg", "Medel", "Hög", "Max"]; // Alltid "Max"
-
+const volumeLevels = ["Låg", "Medel", "Hög", "Max"];
 const layouts = ["Enkel layout", "Avancerad layout", "Kompakt layout", "Maximal layout"];
-const wrongLayouts = ["Avancerad layout", "Kompakt layout", "Maximal layout", "Enkel layout"]; // Fel layout väljs
+
+const funnyMessages = [
+  "Nej, det där ville du inte välja! 😈",
+  "Haha, trodde du verkligen att det skulle fungera? 🤪",
+  "Överraskning! Något annat valdes! 🎉",
+  "Det där var inte rätt val för dig... 🤔",
+  "Nej nej nej, så får du inte göra! 😅"
+];
+
+const colorMap: Record<string, string> = {
+  Röd: "#ff4c4c",
+  Blå: "#4c6eff",
+  Grön: "#4cff87",
+  Gul: "#fff94c",
+  Lila: "#c04cff",
+  Rosa: "#ff4cb3",
+};
 
 const SettingsScreen = () => {
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
-  const [selectedVolume, setSelectedVolume] = useState(volumeLevels[0]);
-  const [selectedLayout, setSelectedLayout] = useState(layouts[0]);
+  const { settings, updateSettings, getRandomSetting } = useSettings();
 
-  const handleSave = () => {
-    Alert.alert(
-      "Bekräfta ändringar",
-      "Är du **säker** på att du vill spara? Detta kan inte ångras!",
-      [
-        { text: "Avbryt", onPress: () => Alert.alert("Okej, inställningarna har **inte** sparats.") },
-        { text: "Ja, jag är säker!", onPress: () => Alert.alert("Bra! Nu behöver du bekräfta igen...") },
-      ]
-    );
+  const getFunnyMessage = () => {
+    return funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
   };
 
+  const handleChange = (type: "color" | "language" | "volume" | "layout", value: string) => {
+    updateSettings({ [type]: value });
+    Alert.alert("Hoppsan!", getFunnyMessage());
+  };
+
+  const handleSave = () => {
+    Alert.alert("Oj då!", "Dina inställningar sparades... fast helt annorlunda! 🎭");
+  };
+
+  const textColor = settings.darkMode ? "#fff" : "#000";
+  const buttonColor = settings.darkMode ? "#999" : "#4CAF50";
+  const bgColor = colorMap[settings.color] || "#ffffff";
+
   return (
-    <View style={[styles.container, { backgroundColor: wrongColors[colors.indexOf(selectedColor)] }]}>
-      <Text style={styles.header}>Frustrerande Inställningar</Text>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
+      <Text style={[styles.header, { color: textColor }]}>Förvirrande Inställningar 🎭</Text>
 
-      {/* Färgval */}
+      {/* Färg */}
       <View style={styles.setting}>
-        <Text>Välj färgtema:</Text>
-        <Picker selectedValue={selectedColor} onValueChange={(itemValue) => setSelectedColor(itemValue)}>
-          {colors.map((color, index) => (
-            <Picker.Item key={index} label={color} value={color} />
+        <Text style={[styles.label, { color: textColor }]}>Färgtema:</Text>
+        <Picker selectedValue={settings.color} onValueChange={(val) => handleChange("color", val)}>
+          {colors.map((c, idx) => (
+            <Picker.Item key={idx} label={c} value={c} />
           ))}
         </Picker>
       </View>
 
-      {/* Språkval (men det ändras aldrig) */}
+      {/* Språk */}
       <View style={styles.setting}>
-        <Text>Välj språk:</Text>
-        <Picker selectedValue={selectedLanguage} onValueChange={() => Alert.alert("Språket ändrades! (Men egentligen inte 😆)")}>
-          {languages.map((lang, index) => (
-            <Picker.Item key={index} label={lang} value={lang} />
+        <Text style={[styles.label, { color: textColor }]}>Språk:</Text>
+        <Picker selectedValue={settings.language} onValueChange={(val) => handleChange("language", val)}>
+          {languages.map((lang, idx) => (
+            <Picker.Item key={idx} label={lang} value={lang} />
           ))}
         </Picker>
       </View>
 
-      {/* Ljudkontroll (alltid max) */}
+      {/* Volym */}
       <View style={styles.setting}>
-        <Text>Justera volym:</Text>
-        <Picker selectedValue={selectedVolume} onValueChange={() => setSelectedVolume("Max")}>
-          {volumeLevels.map((level, index) => (
-            <Picker.Item key={index} label={level} value={level} />
+        <Text style={[styles.label, { color: textColor }]}>Volym:</Text>
+        <Picker selectedValue={settings.volume} onValueChange={(val) => handleChange("volume", val)}>
+          {volumeLevels.map((vol, idx) => (
+            <Picker.Item key={idx} label={vol} value={vol} />
           ))}
         </Picker>
       </View>
 
-      {/* Layoutval (väljer alltid fel layout) */}
+      {/* Layout */}
       <View style={styles.setting}>
-        <Text>Välj sidlayout:</Text>
-        <Picker selectedValue={selectedLayout} onValueChange={(itemValue) => setSelectedLayout(wrongLayouts[layouts.indexOf(itemValue)])}>
-          {layouts.map((layout, index) => (
-            <Picker.Item key={index} label={layout} value={layout} />
+        <Text style={[styles.label, { color: textColor }]}>Layout:</Text>
+        <Picker selectedValue={settings.layout} onValueChange={(val) => handleChange("layout", val)}>
+          {layouts.map((l, idx) => (
+            <Picker.Item key={idx} label={l} value={l} />
           ))}
         </Picker>
       </View>
 
-      {/* Spara-knapp med överdriven bekräftelse */}
-      <Button title="Spara inställningar" onPress={handleSave} color="red" />
+      {/* Dark Mode Toggle */}
+      <View style={styles.setting}>
+        <Text style={[styles.label, { color: textColor }]}>Mörkt läge:</Text>
+        <Switch
+          value={settings.darkMode}
+          onValueChange={() => {
+            updateSettings({ darkMode: !settings.darkMode });
+            Alert.alert("😎", getFunnyMessage());
+          }}
+        />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <Button title="Försök spara..." onPress={handleSave} color={buttonColor} />
+      </View>
     </View>
   );
 };
@@ -84,15 +114,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   setting: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10,
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    marginTop: 30,
   },
 });
 
