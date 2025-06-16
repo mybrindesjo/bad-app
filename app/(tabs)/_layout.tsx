@@ -3,10 +3,12 @@ import React, { useEffect } from "react";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../../context/AuthContext";
+import { useSettings } from "../../context/SettingsContext";
 
 export default function TabLayout() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const { getThemeColor } = useSettings();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -20,12 +22,15 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: "absolute",
-          },
-          default: {},
-        }),
+        tabBarStyle: {
+          ...Platform.select({
+            ios: {
+              position: "absolute",
+            },
+            default: {},
+          }),
+          backgroundColor: getThemeColor(),
+        },
       }}
     >
       <Tabs.Screen

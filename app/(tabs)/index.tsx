@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
+import { useSettings } from '../../context/SettingsContext';
 
 const mandatoryQuestions = [
   { 
@@ -45,6 +46,7 @@ const ProfileScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
+  const { theme, language, notifications, volume } = useSettings();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -63,6 +65,16 @@ const ProfileScreen: React.FC = () => {
       }
     }, 2000);
   };
+
+  const renderCurrentSettings = () => (
+    <View style={styles.settingsInfo}>
+      <Text style={styles.settingHeader}>Aktiva inställningar:</Text>
+      <Text>Tema: {theme}</Text>
+      <Text>Språk: {language}</Text>
+      <Text>Notiser: {notifications}</Text>
+      <Text>Volym: {volume}</Text>
+    </View>
+  );
 
   if (loading) {
     return <Text style={styles.loading}>Laddar...</Text>;
@@ -89,6 +101,7 @@ const ProfileScreen: React.FC = () => {
                   <Text style={styles.answer}>{fakeAnswers[index]}</Text>
                 </View>
               ))}
+              {renderCurrentSettings()}
             </>
           )}
         </>
@@ -148,6 +161,16 @@ const styles = StyleSheet.create({
   },
   answer: {
     color: "#666",
+  },
+  settingsInfo: {
+    padding: 15,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  settingHeader: {
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 
