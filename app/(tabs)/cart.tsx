@@ -10,7 +10,7 @@ const CartScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Din varukorg är tom</Text>
-        <Text>Svara på frågorna i profilen först!</Text>
+        <Text style={styles.info}>Svara på frågorna i profilen först!</Text>
       </View>
     );
   }
@@ -54,6 +54,12 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
+    color: "#000000",
+    marginBottom: 20,
+    fontFamily: "Courier",
+  },
+  info: {
+    fontSize: 16,
     color: "#000000",
     marginBottom: 20,
     fontFamily: "Courier",
