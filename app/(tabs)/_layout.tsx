@@ -8,7 +8,7 @@ import { useSettings } from "../../context/SettingsContext";
 export default function TabLayout() {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const { getThemeColor } = useSettings();
+  const { getThemeColor, translate } = useSettings();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -36,7 +36,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Profil",
+          title: translate("profile"),
+          tabBarLabel: translate("profile"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
@@ -46,7 +47,8 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            title: "Inställningar",
+            title: translate("settings"),
+            tabBarLabel: translate("settings"),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="settings-outline" size={size} color={color} />
             ),

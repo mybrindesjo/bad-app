@@ -5,6 +5,7 @@ import { auth } from "../firebase/firebase-config";
 import { useRouter } from "expo-router";
 import Dropdown from "./DropDownEmail";
 import DropdownPass from "./DropDownPass";
+import { useSettings } from "../context/SettingsContext";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -16,6 +17,7 @@ const LoginForm: React.FC = () => {
 
   const router = useRouter();
   const buttonPosition = new Animated.Value(0);
+  const { translate } = useSettings();
 
   useLayoutEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -30,7 +32,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (): Promise<void> => {
     if (!isLogin && password !== confirmPassword) {
-      Alert.alert("Fel", "Lösenorden matchar inte!");
+      Alert.alert(translate("error"), translate("passwordMismatch"));
       return;
     }
 
@@ -39,19 +41,19 @@ const LoginForm: React.FC = () => {
         await signInWithEmailAndPassword(auth, email, password);
       } else {
         if (!email.includes("@")) {
-          throw new Error("Ogiltig e-postadress!");
+          throw new Error(translate("invalidEmail"));
         }
         await createUserWithEmailAndPassword(auth, email, password);
-        Alert.alert("Registrerad!", "Du är nu inloggad.");
+        Alert.alert(translate("registered"), translate("loggedIn"));
       }
     } catch (error) {
-      setError((error as Error).message || "Registrering misslyckades.");
+      setError((error as Error).message || translate("registrationFailed"));
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{isLogin ? "Logga in" : "Registrera dig"}</Text>
+      <Text style={styles.title}>{isLogin ? translate("login") : translate("register")}</Text>
       
       <Dropdown onEmailChange={setEmail} />
       <DropdownPass onPasswordChange={setPassword} />
@@ -60,14 +62,14 @@ const LoginForm: React.FC = () => {
 
       <Animated.View style={{ transform: [{ translateX: buttonPosition }] }}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>{isLogin ? "Logga in" : "Registrera"}</Text>
+          <Text style={styles.buttonText}>{isLogin ? translate("loginButton") : translate("registerButton")}</Text>
         </TouchableOpacity>
       </Animated.View>
 
       <View style={styles.toggleContainer}>
-        <Text style={styles.toggleTextWhite}>{isLogin ? "Har du inget konto? " : "Har du redan ett konto? "}</Text>
+        <Text style={styles.toggleTextWhite}>{isLogin ? translate("noAccount") : translate("alreadyAccount")}</Text>
         <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
-          <Text style={styles.toggleText}>{isLogin ? "Registrera dig här" : "Logga in här"}</Text>
+          <Text style={styles.toggleText}>{isLogin ? translate("registerHere") : translate("loginHere")}</Text>
         </TouchableOpacity>
       </View>
     </View>
