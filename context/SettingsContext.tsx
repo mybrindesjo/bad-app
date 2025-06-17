@@ -26,7 +26,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState({
     theme: 'Systemstandard',
-    language: 'Svenska',
+    language: 'Rövarspråk', // Ändra default språk
     notifications: 'Alla',
     volume: 'Medel',
   });
@@ -41,11 +41,17 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const translate = (key: string) => {
     const currentLang = settings.language;
-    return translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)['Svenska']] || key;
+    const translation = translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)["Rövarspråk"]];
+    return typeof translation === "string" ? translation : key;
   };
 
   return (
-    <SettingsContext.Provider value={{ ...settings, updateSettings, getThemeColor, translate }}>
+    <SettingsContext.Provider value={{ 
+      ...settings, 
+      updateSettings, 
+      getThemeColor, 
+      translate
+    }}>
       {children}
     </SettingsContext.Provider>
   );

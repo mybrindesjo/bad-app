@@ -1,133 +1,121 @@
 export const translations = {
-  Svenska: {
-    // Bastexter
-    welcome: "Välkommen",
-    settings: "Inställningar",
-    theme: "Appens tema",
-    language: "Språk",
-    notifications: "Notiser",
-    loading: "Laddar...",
-    answers: "Här är dina svar:",
-    activeSettings: "Aktiva inställningar",
-    profile: "Profil",
-    
-    // Autentisering
-    login: "Logga in",
-    logout: "Logga ut",
-    email: "E-post",
-    password: "Lösenord",
-    loginButton: "Logga in",
-    loginError: "Inloggningen misslyckades",
-    
-    // Menyer och navigation
-    home: "Hem",
-    back: "Tillbaka",
-    save: "Spara",
-    cancel: "Avbryt",
+  Rorövovarorsospoprokroråkok: {
+    welcome: "Vovälelkomomononen",
+    settings: "Instonställlninongogar",
+    theme: "Appoppensns tetemoma",
+    language: "Sproråkok",
+    notifications: "Nonototisiserer",
+    loading: "Loloadoddaror...",
+    answers: "Hohäror äror didinona sosvovaror:",
+    activeSettings: "Akoktotiviva inonstoställlninongogar",
+    profile: "Profrorofifilol",
 
-    // Inställningar och val
+    login: "Lolologoga inon",
+    logout: "Lolologoga utot",
+    email: "E-momaiolil",
+    password: "Lolösose-no-noordod",
+    loginButton: "Lolologoga inon",
+    loginError: "Inonlogogginongen momisosslyckockadod",
+
+    home: "Hohemo",
+    back: "Totilloblaka",
+    save: "Sosparora",
+    cancel: "Avovbrorytot",
+
     themeOptions: {
-      light: "Ljust läge",
-      dark: "Mörkt läge",
-      system: "Systemstandard"
+      light: "Lojusostot lolägoogoe",
+      dark: "Momörorkokt lolägoogoe",
+      system: "Sosyso-stotandondardod"
     },
     languageOptions: {
-      Svenska: "Svenska",
-      Engelska: "Engelska",
-      Spanska: "Spanska"
+      Svenska: "Sosvevensonsoska",
+      Engelska: "Enongoglelsoska",
+      Spanska: "Spospananonoska"
     },
     notificationOptions: {
-      all: "Alla",
-      important: "Viktiga",
-      none: "Inga"
+      all: "Alollol",
+      important: "Imompoportotantot",
+      none: "Inongoga"
     },
   },
-  
-  Engelska: {
-    // Base texts
-    welcome: "Welcome",
-    settings: "Settings",
-    theme: "App theme",
-    language: "Language",
-    notifications: "Notifications",
-    loading: "Loading...",
-    answers: "Here are your answers:",
-    activeSettings: "Active settings",
-    profile: "Profile",
-    
-    // Authentication
-    login: "Login",
-    logout: "Logout",
-    email: "Email",
-    password: "Password",
-    loginButton: "Login",
-    loginError: "Login failed",
-    
-    // Menus and navigation
-    home: "Home",
-    back: "Back",
-    save: "Save",
-    cancel: "Cancel",
 
-    // Settings and options
+  Morse: {
+    welcome: "···– ·–·· ·– –· –– – · ––· ·–· –· ·· –– ·–",
+    settings: "··· – · – – ·– ·– ·· –· –· –· –· ·–",
+    theme: "– – · – · ·–",
+    language: "··– ·– ·–· ··· ·· ·– ·– –– ·–",
+    notifications: "–· –·· –– ·· ·– – – · ·· ––",
+    loading: "·–·· ·– –·· –– ·– –· –– ·– ·–·",
+    answers: "·· ··· · ··– ··· ·– –– –– –·· ·–",
+    activeSettings: "–· –– ·· ·– ··· –· –– ·– ·– –·",
+    profile: "·–· –· – ·· –– ·–",
+
+    login: "··– ·–·· –– –– ·–·",
+    logout: "··– ·–·· –– –– –·",
+    email: "·· ·– –– ·– ·–· –·· ·–··",
+    password: "··– ·– –– ·– ·–· ·– ·– ––",
+    loginButton: "·· ·– –– ·– ·–·",
+    loginError: "··– –– ·– ·– –– –· ·– ––",
+
+    home: "···· ––– ––– –––",
+    back: "–·· ––– ––– ––·",
+    save: "···· ––– ––– ––",
+    cancel: "–·· ––– ––– ––·",
+
     themeOptions: {
-      light: "Light mode",
-      dark: "Dark mode",
-      system: "System default"
+      light: "·–·· · ·–· –– – – · – –",
+      dark: "–·· ·– –– –· ·· – ·– –",
+      system: "··– ·– –– ·– –– –·· ·– ––",
     },
     languageOptions: {
-      Svenska: "Swedish",
-      Engelska: "English",
-      Spanska: "Spanish"
+      Svenska: "···· ––– ––– ––",
+      Engelska: "–·· ·– –– –·",
+      Spanska: "··– ·– –– ·– ––",
     },
     notificationOptions: {
-      all: "All",
-      important: "Important",
-      none: "None"
+      all: "–· –– ·· ·– ··· –· –– ·– ·– –·",
+      important: "– ··· · ·· –– ·– ––",
+      none: "– – ··· ·",
     },
   },
-  
-  Spanska: {
-    // Textos básicos
-    welcome: "Bienvenido",
-    settings: "Ajustes",
-    theme: "Tema",
-    language: "Idioma",
-    notifications: "Notificaciones",
-    loading: "Cargando...",
-    answers: "Tus respuestas:",
-    activeSettings: "Configuración activa",
-    profile: "Perfil",
-    
-    // Autenticación
-    login: "Iniciar sesión",
-    logout: "Cerrar sesión",
-    email: "Correo electrónico",
-    password: "Contraseña",
-    loginButton: "Iniciar sesión",
-    loginError: "Error de inicio de sesión",
-    
-    // Menús y navegación
-    home: "Inicio",
-    back: "Atrás",
-    save: "Guardar",
-    cancel: "Cancelar",
 
-    // Configuración y opciones
+  Runskrift: {
+    welcome: "ᚢᛁᛚᚨᛯᚷᛖᛘᚨᛚ",
+    settings: "ᛁᚾᛊᛏᛖᛚᛚᛁᛜᚾᚨᛏᛖᛇ",
+    theme: "ᛏᚺᛖᛘᛖ",
+    language: "ᛚᚨᛜᚨᚷᛖ",
+    notifications: "ᚾᛟᛏᛁᚠᛁᚲᚨᛏᛁᛟᚾᛊ",
+    loading: "ᛚᚨᛞᛞᛖᚱ",
+    answers: "ᚨᚾᛊᚹᛖᚱᛊ",
+    activeSettings: "ᚨᚲᛏᛁᚲᛖ ᛊᛖᛏᛏᛁᛜᛊ",
+    profile: "ᛈᚱᛟᚠᛁᛚᛖ",
+
+    login: "ᛚᚮᚷᚨ",
+    logout: "ᛚᚮᚷᚨᛏ",
+    email: "ᛖᛗᚨᛁᛚ",
+    password: "ᛈᚨᛋᛋᚹᛟᚱᛞ",
+    loginButton: "ᛚᚮᚷᚨ",
+    loginError: "ᛚᚮᚷᚨ ᛖᚱᚱᛟᚱ",
+
+    home: "ᚺᛟᛗᛖ",
+    back: "ᛒᚨᚲᚲ",
+    save: "ᛊᛖᚨᚲᛖ",
+    cancel: "ᚲᚨᚾᚲᛖᛚ",
+
     themeOptions: {
-      light: "Modo claro",
-      dark: "Modo oscuro",
-      system: "Predeterminado del sistema"
+      light: "ᛚᛁᚷᚺᛏ",
+      dark: "ᛞᚨᚱᚲ",
+      system: "ᛊᛁᛊᛏᛖᛗ",
     },
     languageOptions: {
-      Svenska: "Sueco",
-      Engelska: "Inglés",
-      Spanska: "Español"
+      Svenska: "ᚢᛖᚾᛊᚲᛖ",
+      Engelska: "ᛖᚾᚷᛖᛚᛊᚲᚨ",
+      Spanska: "ᛊᛈᚨᚾᛊᚲᚨ",
     },
     notificationOptions: {
-      all: "Todos",
-      important: "Importantes",
-      none: "Ninguno"
+      all: "ᚨᛚᛚ",
+      important: "ᛁᛗᛈᛟᚱᛏᚨᚾᛏ",
+      none: "ᚾᛟᚾᛖ",
     },
-  }
+  },
 };

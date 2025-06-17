@@ -30,7 +30,7 @@ const SettingsScreen: React.FC = () => {
           onValueChange={(val) => updateSettings("language", val)}
           style={styles.picker}
         >
-          {["Svenska", "Engelska", "Spanska"].map((option) => (
+          {["Rövarspråk", "Morse", "Runskrift"].map((option) => (
             <Picker.Item key={option} label={option} value={option} />
           ))}
         </Picker>
