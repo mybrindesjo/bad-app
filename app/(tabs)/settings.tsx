@@ -3,32 +3,38 @@ import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useSettings } from "../../context/SettingsContext";
 
-const settingsOptions = [
-  { label: "Appens tema", options: ["Ljus", "Mörk", "Systemstandard", "Röd", "Blå", "Grön", "Gul"] },
-  { label: "Språk", options: ["Svenska", "Engelska", "Spanska", "Japanska"] },
-];
-
 const SettingsScreen: React.FC = () => {
-  const { theme, updateSettings, getThemeColor } = useSettings();
+  const { theme, language, updateSettings, getThemeColor, translate } = useSettings();
 
   return (
     <View style={[styles.container, { backgroundColor: getThemeColor() }]}>
-      <Text style={styles.header}>Appens inställningar</Text>
+      <Text style={styles.header}>{translate('settings')}</Text>
 
-      {settingsOptions.map((setting, index) => (
-        <View key={index} style={styles.row}>
-          <Text style={styles.label}>{setting.label}</Text>
-          <Picker
-            selectedValue={theme}
-            onValueChange={(val) => updateSettings("theme", val)}
-            style={styles.picker}
-          >
-            {setting.options.map((option) => (
-              <Picker.Item key={option} label={option} value={option} />
-            ))}
-          </Picker>
-        </View>
-      ))}
+      <View style={styles.row}>
+        <Text style={styles.label}>{translate('theme')}</Text>
+        <Picker
+          selectedValue={theme}
+          onValueChange={(val) => updateSettings("theme", val)}
+          style={styles.picker}
+        >
+          {["Ljus", "Mörk", "Systemstandard"].map((option) => (
+            <Picker.Item key={option} label={option} value={option} />
+          ))}
+        </Picker>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.label}>{translate('language')}</Text>
+        <Picker
+          selectedValue={language}
+          onValueChange={(val) => updateSettings("language", val)}
+          style={styles.picker}
+        >
+          {["Svenska", "Engelska", "Spanska"].map((option) => (
+            <Picker.Item key={option} label={option} value={option} />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 };

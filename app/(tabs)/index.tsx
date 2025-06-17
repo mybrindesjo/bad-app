@@ -46,7 +46,7 @@ const ProfileScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
-  const { theme, getThemeColor, language, notifications, volume } = useSettings(); // Hämta inställningar
+  const { theme, getThemeColor, language, notifications, volume, translate } = useSettings(); // Hämta inställningar
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -67,7 +67,7 @@ const ProfileScreen: React.FC = () => {
   };
 
   if (loading) {
-    return <Text style={styles.loading}>Laddar...</Text>;
+    return <Text style={styles.loading}>{translate('loading')}</Text>;
   }
 
   return (
@@ -83,8 +83,8 @@ const ProfileScreen: React.FC = () => {
             </View>
           ) : (
             <>
-              <Text style={styles.text}>Välkommen {user.email}! 👋</Text>
-              <Text style={styles.subtext}>Här är dina svar:</Text>
+              <Text style={styles.text}>{translate('welcome')} {user.email}! 👋</Text>
+              <Text style={styles.subtext}>{translate('answers')}</Text>
               {mandatoryQuestions.map((question, index) => (
                 <View key={index} style={styles.answerBox}>
                   <Text style={styles.question}>{question.question}</Text>

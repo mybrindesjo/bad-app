@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { translations } from '../translations';
 
 const themeColors = {
   'Ljus': '#4c6eff',
@@ -17,6 +18,7 @@ type SettingsContextType = {
   volume: string;
   updateSettings: (key: string, value: string) => void;
   getThemeColor: () => string;
+  translate: (key: string) => string;
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -37,8 +39,13 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     return themeColors[settings.theme as keyof typeof themeColors] || themeColors.Systemstandard;
   };
 
+  const translate = (key: string) => {
+    const currentLang = settings.language;
+    return translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)['Svenska']] || key;
+  };
+
   return (
-    <SettingsContext.Provider value={{ ...settings, updateSettings, getThemeColor }}>
+    <SettingsContext.Provider value={{ ...settings, updateSettings, getThemeColor, translate }}>
       {children}
     </SettingsContext.Provider>
   );
