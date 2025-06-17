@@ -3,42 +3,12 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
-import { useSettings } from "../../context/SettingsContext"; // Importera settings
 
 const mandatoryQuestions = [
-  { 
-    question: "Vad är din favoritfärg på en tisdagseftermiddag?",
-    options: ["Blå", "Röd", "Grön", "Gul"],
-  },
-  { 
-    question: "Om du var ett köksredskap, vilket skulle du vara?",
-    options: ["Kniv", "Gaffel", "Visp", "Brödrost"],
-  },
-  { 
-    question: "Hur många gånger har du blinkat idag?",
-    options: ["10", "100", "1000", "Jag har aldrig blinkat"],
-  },
-  { 
-    question: "Vilken låt lyssnade du på idag?",
-    options: ["Bohemian Rhapsody", "Despacito", "Never Gonna Give You Up", "Baby Shark"],
-  },
-  { 
-    question: "Om du fick välja mellan ost och tomat – varför?",
-    options: ["Ost är kung!", "Tomat är liv!", "Ingen av dem", "Allt på en pizza"],
-  },
-  { 
-    question: "Skriv en dikt om en osynlig giraff.",
-    options: ["Den är lång och smal", "Den finns inte alls", "Den springer genom natten", "Den dricker kaffe"],
-  }
-];
-
-const fakeAnswers = [
-  "Neonrosa",
-  "Slev",
-  "5000 gånger",
-  "Nationalsången",
-  "Jag vägrar svara på denna fråga",
-  "Jag har aldrig sett en giraff"
+  { question: "Vad är din favoritfärg på en tisdagseftermiddag?", options: ["Blå", "Röd", "Grön", "Gul"] },
+  { question: "Om du var ett köksredskap, vilket skulle du vara?", options: ["Kniv", "Gaffel", "Visp", "Brödrost"] },
+  { question: "Hur många gånger har du blinkat idag?", options: ["10", "100", "1000", "Jag har aldrig blinkat"] },
+  { question: "Vilken låt lyssnade du på idag?", options: ["Bohemian Rhapsody", "Despacito", "Never Gonna Give You Up", "Baby Shark"] },
 ];
 
 const ProfileScreen: React.FC = () => {
@@ -46,7 +16,6 @@ const ProfileScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
-  const { theme, getThemeColor, language, notifications, volume, translate } = useSettings(); // Hämta inställningar
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -56,58 +25,23 @@ const ProfileScreen: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleNextQuestion = () => {
-    setTimeout(() => {
-      if (currentQuestionIndex < mandatoryQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        setQuestionComplete(true);
-      }
-    }, 2000);
-  };
-
-  const getTranslatedQuestions = () => {
-    return [
-      {
-        question: translate('questions.colorQuestion'),
-        options: translations[language as keyof typeof translations].options?.colors || [],
-      },
-      {
-        question: translate('questions.toolQuestion'),
-        options: translations[language as keyof typeof translations].options?.tools || [],
-      },
-      // ...resten av frågorna
-    ];
-  };
-
-  const translatedQuestions = getTranslatedQuestions();
-
   if (loading) {
-    return <Text style={styles.loading}>{translate('loading')}</Text>;
+    return <Text style={styles.loading}>Laddar...</Text>;
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: getThemeColor() }]}>
+    <View style={styles.container}>
       {user ? (
         <>
           {!questionComplete ? (
             <View style={styles.questionBox}>
-              <Text style={styles.text}>{translatedQuestions[currentQuestionIndex].question}</Text>
-              {translatedQuestions[currentQuestionIndex].options.map((option, index) => (
-                <Button key={index} title={option} onPress={handleNextQuestion} />
+              <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex].question}</Text>
+              {mandatoryQuestions[currentQuestionIndex].options.map((option, index) => (
+                <Button key={index} title={option} onPress={() => setCurrentQuestionIndex(currentQuestionIndex + 1)} />
               ))}
             </View>
           ) : (
-            <>
-              <Text style={styles.text}>{translate('welcome')} {user.email}! 👋</Text>
-              <Text style={styles.subtext}>{translate('answers')}</Text>
-              {mandatoryQuestions.map((question, index) => (
-                <View key={index} style={styles.answerBox}>
-                  <Text style={styles.question}>{question.question}</Text>
-                  <Text style={styles.answer}>{fakeAnswers[index]}</Text>
-                </View>
-              ))}
-            </>
+            <Text style={styles.text}>Välkommen {user.email}! 👋</Text>
           )}
         </>
       ) : (
@@ -145,35 +79,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     borderBlockColor: "#ccc",
-  },
-  subtext: {
-    fontSize: 16,
-    color: "#555",
-    textAlign: "center",
-  },
-  answerBox: {
-    padding: 10,
-    marginVertical: 5,
-    width: "95%",
-    borderRadius: 5,
-    backgroundColor: "#f9f9f9",
-  },
-  question: {
-    fontWeight: "bold",
-    color: "#333",
-  },
-  answer: {
-    color: "#666",
-  },
-  settingsInfo: {
-    padding: 15,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  settingHeader: {
-    fontWeight: "bold",
-    marginBottom: 10,
   },
 });
 

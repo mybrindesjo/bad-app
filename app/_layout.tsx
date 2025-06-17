@@ -1,32 +1,30 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "../context/AuthContext";
-import { SettingsProvider, useSettings } from "../context/SettingsContext";
+import { SettingsProvider } from "../context/SettingsContext";
 
 // Separera Stack-navigeringen till en egen komponent
 function AppNavigator() {
-  const { translate } = useSettings();
-  
   return (
     <Stack>
       <Stack.Screen
         name="login"
         options={{
           headerShown: false,
-          title: translate("login"),
+          title: "Logga in",
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="profile"
         options={{
-          title: translate("profile"),
+          title: "Profil",
         }}
       />
       <Stack.Screen
         name="+not-found"
         options={{
-          title: translate("error"),
+          title: "Fel",
         }}
       />
       <StatusBar style="auto" />
