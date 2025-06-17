@@ -60,7 +60,6 @@ const ProfileScreen: React.FC = () => {
 
   const generateProduct = () => {
     setFinalProduct(`Grattis! Vi har lagt till ${fakeProducts[0].name}, ${fakeProducts[1].name} och ${fakeProducts[2].name} i din varukorg!`);
-    // Lägg till produkter i varukorgen med fördröjning
     setTimeout(() => {
       addItems(fakeProducts);
     }, 2000);
@@ -126,14 +125,14 @@ const styles = StyleSheet.create({
     fontSize: 18, 
     color: "#000000", 
     textAlign: "left",
-    fontFamily: "Courier"  // Changed from system-ui
+    fontFamily: "Courier"
   },
   welcomeText: { 
     fontSize: 24, 
     marginBottom: 15, 
     color: "#000000", 
     textAlign: "left",
-    fontFamily: "Courier"  // Changed from system-ui
+    fontFamily: "Courier"
   },
   questionBox: { 
     padding: 20, 
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 15, 
     color: "#000", 
     textAlign: "left",
-    fontFamily: "Courier"  // Changed from system-ui
+    fontFamily: "Courier"
   },
   answerButton: { 
     marginVertical: 10, 
@@ -167,14 +166,14 @@ const styles = StyleSheet.create({
     fontSize: 28, 
     color: "#000000", 
     marginBottom: 15,
-    fontFamily: "Courier"  // Changed from monospace
+    fontFamily: "Courier"
   },
   finalProduct: { 
     fontSize: 20, 
     color: "#000000", 
     marginBottom: 15, 
     textAlign: "left",
-    fontFamily: "Courier"  // Changed from system-ui
+    fontFamily: "Courier"
   },
   toCartButton: {
     flexDirection: "row",

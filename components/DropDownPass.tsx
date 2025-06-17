@@ -10,7 +10,6 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
   const [passwordParts, setPasswordParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // Standard number list including ⌫
   const getNumbers = () => {
     return [...Array.from({ length: 10 }, (_, i) => i.toString()), "⌫"];
   };

@@ -4,7 +4,6 @@ import { AuthProvider } from "../context/AuthContext";
 import { SettingsProvider } from "../context/SettingsContext";
 import { CartProvider } from "../context/CartContext";
 
-// Separera Stack-navigeringen till en egen komponent
 function AppNavigator() {
   return (
     <Stack
@@ -14,7 +13,7 @@ function AppNavigator() {
         },
         headerTintColor: "#000000",
         headerTitleStyle: {
-          fontFamily: "Courier", // Changed from system-ui
+          fontFamily: "Courier",
         },
         contentStyle: {
           backgroundColor: "#C0C0C0",
@@ -52,7 +51,6 @@ function AppNavigator() {
   );
 }
 
-// Root layout utan useSettings
 export default function RootLayout() {
   return (
     <AuthProvider>

@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   error: { 
-    color: "#FF0000", 
+    color: "#000000",  // Changed from "#FF0000"
     marginTop: 10,
     fontFamily: "Courier"
   },
