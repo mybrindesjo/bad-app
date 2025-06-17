@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 24, 
     marginBottom: 10, 
     color: "#000000",
-    fontFamily: "system-ui",
+    fontFamily: "Courier",
     textAlign: "left"
   },
   button: { 
@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
   buttonText: { 
     color: "#000000", 
     fontSize: 16,
-    fontFamily: "system-ui",
+    fontFamily: "Courier",
     textAlign: "left"
   },
   error: { 
     color: "#FF0000", 
     marginTop: 10,
-    fontFamily: "system-ui"
+    fontFamily: "Courier"
   },
   toggleContainer: { 
     flexDirection: "row", 
@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
   toggleText: { 
     color: "#000000", 
     textDecorationLine: 'underline',
-    fontFamily: "system-ui",
+    fontFamily: "Courier",
     textAlign: "left"
   },
   toggleTextWhite: { 
     color: "#000000",
-    fontFamily: "system-ui",
+    fontFamily: "Courier",
     textAlign: "left"
   }
 });

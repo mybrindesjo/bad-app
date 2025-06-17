@@ -30,7 +30,7 @@ export default function TabLayout() {
           borderWidth: 2,
         },
         tabBarLabelStyle: {
-          fontFamily: "system-ui",
+          fontFamily: "Courier",
         },
         tabBarActiveTintColor: "#000000",
         tabBarInactiveTintColor: "#666666",

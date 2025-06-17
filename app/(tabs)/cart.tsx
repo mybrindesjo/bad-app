@@ -49,64 +49,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    fontFamily: "MS-Sans",
+    fontFamily: "Courier",
     width: '100%',
   },
   header: {
     fontSize: 24,
     color: "#000000",
     marginBottom: 20,
-    fontFamily: "MS-Sans",
-  },
-  itemCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",  // Changed from 80%
-    backgroundColor: "#FFFFFF",
-    padding: 10,
-    marginBottom: 10,
-    borderWidth: 2,
-    borderRightColor: '#404040',
-    borderBottomColor: '#404040',
-    borderLeftColor: '#FFFFFF',
-    borderTopColor: '#FFFFFF',
-    fontFamily: "MS-Sans",
-  },
-  itemDetails: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  image: {
-    width: 60,
-    height: 60,
-    marginRight: 10,
-  },
-  item: {
-    fontSize: 16,
-    color: "#000000",
-    fontFamily: "MS-Sans",
-  },
-  price: {
-    fontSize: 16,
-    color: "#000000",
-    fontFamily: "MS-Sans",
-  },
-  totalRow: {
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",  // Changed from 80%
-  },
-  totalText: {
-    fontSize: 22,
-    color: "#000000",
-    fontFamily: "MS-Sans",
-  },
-  totalAmount: {
-    fontSize: 22,
-    color: "#000000",
-    fontFamily: "MS-Sans",
-  },
-});
-
-export default CartScreen;
+    fontFamily: "Courier",
+ 

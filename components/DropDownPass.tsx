@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#C0C0C0',
   },
   label: {
-    fontFamily: 'system-ui',
+    fontFamily: 'Courier',
     color: '#000000',
     marginBottom: 5,
     textAlign: 'left'
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   picker: {
     backgroundColor: '#C0C0C0',
     color: '#000000',
-    fontFamily: 'system-ui',
+    fontFamily: 'Courier',
     textAlign: 'left'
   }
 });
