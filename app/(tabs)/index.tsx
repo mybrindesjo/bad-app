@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from "../../context/SettingsContext"; // Importera settings
 
 const mandatoryQuestions = [
   { 
@@ -46,7 +46,7 @@ const ProfileScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
-  const { theme, language, notifications, volume } = useSettings();
+  const { theme, getThemeColor, language, notifications, volume } = useSettings(); // Hämta inställningar
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -66,26 +66,16 @@ const ProfileScreen: React.FC = () => {
     }, 2000);
   };
 
-  const renderCurrentSettings = () => (
-    <View style={styles.settingsInfo}>
-      <Text style={styles.settingHeader}>Aktiva inställningar:</Text>
-      <Text>Tema: {theme}</Text>
-      <Text>Språk: {language}</Text>
-      <Text>Notiser: {notifications}</Text>
-      <Text>Volym: {volume}</Text>
-    </View>
-  );
-
   if (loading) {
     return <Text style={styles.loading}>Laddar...</Text>;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: getThemeColor() }]}>
       {user ? (
         <>
           {!questionComplete ? (
-            <View style={[styles.questionBox]}>
+            <View style={styles.questionBox}>
               <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex].question}</Text>
               {mandatoryQuestions[currentQuestionIndex].options.map((option, index) => (
                 <Button key={index} title={option} onPress={handleNextQuestion} />
@@ -94,14 +84,13 @@ const ProfileScreen: React.FC = () => {
           ) : (
             <>
               <Text style={styles.text}>Välkommen {user.email}! 👋</Text>
-              <Text style={styles.subtext}>Här är dina svar;</Text>
+              <Text style={styles.subtext}>Här är dina svar:</Text>
               {mandatoryQuestions.map((question, index) => (
                 <View key={index} style={styles.answerBox}>
                   <Text style={styles.question}>{question.question}</Text>
                   <Text style={styles.answer}>{fakeAnswers[index]}</Text>
                 </View>
               ))}
-              {renderCurrentSettings()}
             </>
           )}
         </>
@@ -117,9 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
     padding: 20,
-    gap: 20,
   },
   loading: {
     fontSize: 18,
@@ -131,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: "#fffff",
+    backgroundColor: "#f9f9f9",
   },
   text: {
     fontSize: 20,
@@ -169,7 +156,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   settingHeader: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
 });

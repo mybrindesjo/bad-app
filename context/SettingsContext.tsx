@@ -4,6 +4,10 @@ const themeColors = {
   'Ljus': '#ffffff',
   'Mörk': '#1a1a1a',
   'Systemstandard': '#f0f0f0',
+  'Röd': '#ff4c4c',
+  'Blå': '#4c6eff',
+  'Grön': '#4cff87',
+  'Gul': '#fff94c',
 };
 
 type SettingsContextType = {

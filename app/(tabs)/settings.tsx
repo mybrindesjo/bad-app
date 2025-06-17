@@ -1,63 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-
-const colorMap: Record<string, string> = {
-  Ljus: "#fff94c",
-  Mörk: "#4cff87",
-  Systemstandard: "#4c6eff",
-  Röd: "#555567",
-  Blå: "#823656",
-  Grön: "#2845c4",
-  Gul: "#fffff4",
-};
-
-const languageMap: Record<string, string> = {
-  Svenska: "ja",
-  Engelska: "sv",
-  Spanska: "en",
-  Japanska: "es",
-};
+import { useSettings } from "../../context/SettingsContext";
 
 const settingsOptions = [
-  {
-    label: "Appens tema",
-    options: ["Ljus", "Mörk", "Systemstandard", "Röd", "Blå", "Grön", "Gul"],
-  },
-  {
-    label: "Språk",
-    options: ["Svenska", "Engelska", "Spanska", "Japanska"],
-  },
-  {
-    label: "Notiser",
-    options: ["Godnattsagor", "Endast störande", "Inga"],
-  },
+  { label: "Appens tema", options: ["Ljus", "Mörk", "Systemstandard", "Röd", "Blå", "Grön", "Gul"] },
+  { label: "Språk", options: ["Svenska", "Engelska", "Spanska", "Japanska"] },
 ];
 
 const SettingsScreen: React.FC = () => {
-  const [selectedSettings, setSelectedSettings] = useState<Record<string, string>>({
-    "Appens tema": "Ljus",
-    "Språk": "Svenska",
-    "Notiser": "Alla",
-  });
-
-  const handleSelection = (label: string, value: string) => {
-    setSelectedSettings(prev => ({
-      ...prev,
-      [label]: value,
-    }));
-  };
+  const { theme, updateSettings, getThemeColor } = useSettings();
 
   return (
-    <View style={[styles.container, { backgroundColor: colorMap[selectedSettings["Appens tema"]] || "#ffffff" }]}>
+    <View style={[styles.container, { backgroundColor: getThemeColor() }]}>
       <Text style={styles.header}>Appens inställningar</Text>
 
       {settingsOptions.map((setting, index) => (
         <View key={index} style={styles.row}>
           <Text style={styles.label}>{setting.label}</Text>
           <Picker
-            selectedValue={selectedSettings[setting.label]}
-            onValueChange={(val) => handleSelection(setting.label, val)}
+            selectedValue={theme}
+            onValueChange={(val) => updateSettings("theme", val)}
             style={styles.picker}
           >
             {setting.options.map((option) => (
