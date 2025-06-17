@@ -10,7 +10,6 @@ import { useSettings } from "../context/SettingsContext";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string>("");
@@ -31,11 +30,6 @@ const LoginForm: React.FC = () => {
   }, []);
 
   const handleSubmit = async (): Promise<void> => {
-    if (!isLogin && password !== confirmPassword) {
-      Alert.alert(translate("error"), translate("passwordMismatch"));
-      return;
-    }
-
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);

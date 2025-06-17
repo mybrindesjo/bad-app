@@ -12,12 +12,10 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
   const [passwordParts, setPasswordParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // Fixar listan så att ⌫ är först
-  const numbers = [
-     ...Array.from({ length: 10 }, (_, i) => i.toString())
-     , "⌫"
-    
-    ];
+  // Standard sifferlista inklusive ⌫
+  const getNumbers = () => {
+    return [...Array.from({ length: 10 }, (_, i) => i.toString()), "⌫"];
+  };
 
   useEffect(() => {
     onPasswordChange(passwordParts.join(''));
@@ -38,8 +36,8 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
       <Text>{translate('enterPassword')}: {passwordParts.map(() => '*').join('')}</Text>
       <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
         <Picker.Item label={translate('choose')} value="" />
-        {numbers.map((num) => (
-          <Picker.Item key={num} label={num === "⌫" ? "⌫" : translate(`numbers.${num}`)} value={num} />
+        {getNumbers().map((num) => (
+          <Picker.Item key={num} label={num} value={num} />
         ))}
       </Picker>
     </View>

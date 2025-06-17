@@ -8,29 +8,16 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ onEmailChange }) => {
-  const { translate, language } = useSettings();
+  const { translate } = useSettings();
   const [emailParts, setEmailParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  const characters = [
-    ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)),
-    '.', '-', '@', "⌫"
-  ];
-
+  // Standard teckenlista
   const getCharacters = () => {
-    // Anpassa tecken baserat på språk
-    switch(language) {
-      case "Rorövovarorsospoprokroråkok":
-        return [...Array.from({ length: 26 }, (_, i) => 
-          String.fromCharCode(65 + i) + "o" + String.fromCharCode(65 + i).toLowerCase()),
-          '.o.', '-o-', '@o@', "⌫"];
-      case "·–· --- ···· –· ·– –· ·– –· ·– –· ·–":
-        return [...Array.from({ length: 26 }, (_, i) => 
-          String.fromCharCode(65 + i)).map(c => c + " –·–·"),
-          '.-.-', '-....-', '@.-.-@', "⌫"];
-      default:
-        return characters;
-    }
+    return [
+      ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
+      '.', '-', '@', "⌫"
+    ];
   };
 
   useEffect(() => {
