@@ -9,7 +9,7 @@ const CartScreen: React.FC = () => {
   if (items.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Din varukorg är tom 😢</Text>
+        <Text style={styles.header}>Din varukorg är tom</Text>
         <Text>Svara på frågorna i profilen först!</Text>
       </View>
     );
@@ -17,7 +17,7 @@ const CartScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Din varukorg 🛒</Text>
+      <Text style={styles.header}>Din varukorg</Text>
 
       {items.map((item, index) => (
         <View key={index} style={styles.itemCard}>
@@ -36,7 +36,7 @@ const CartScreen: React.FC = () => {
 
       <Button 
         title="Köp nu!" 
-        onPress={() => alert("Grattis! Du har köpt totalt ologiska produkter! 😆")} 
+        onPress={() => alert("Grattis! Du har köpt totalt ologiska produkter!")} 
         color="#0044CC" 
       />
     </View>
@@ -45,57 +45,67 @@ const CartScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#C0C0C0",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    fontFamily: "MS-Sans",
+    width: '100%',
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
+    color: "#000000",
     marginBottom: 20,
+    fontFamily: "MS-Sans",
   },
   itemCard: {
     flexDirection: "row",
     alignItems: "center",
-    width: "80%",
-    backgroundColor: "#f9f9f9",
+    width: "100%",  // Changed from 80%
+    backgroundColor: "#FFFFFF",
     padding: 10,
     marginBottom: 10,
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF',
+    fontFamily: "MS-Sans",
+  },
+  itemDetails: {
+    flex: 1,
+    justifyContent: "space-between",
   },
   image: {
     width: 60,
     height: 60,
     marginRight: 10,
   },
-  itemDetails: {
-    flex: 1,
-  },
   item: {
     fontSize: 16,
-    color: "#000",
+    color: "#000000",
+    fontFamily: "MS-Sans",
   },
   price: {
     fontSize: 16,
-    color: "#0044CC",
+    color: "#000000",
+    fontFamily: "MS-Sans",
   },
   totalRow: {
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
+    width: "100%",  // Changed from 80%
   },
   totalText: {
     fontSize: 22,
-    fontWeight: "bold",
-    color: "#000",
+    color: "#000000",
+    fontFamily: "MS-Sans",
   },
   totalAmount: {
     fontSize: 22,
-    fontWeight: "bold",
-    color: "#0044CC",
+    color: "#000000",
+    fontFamily: "MS-Sans",
   },
 });
 

@@ -21,14 +21,19 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          ...Platform.select({
-            ios: {
-              position: "absolute",
-            },
-            default: {},
-          }),
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "#C0C0C0",
+          borderTopWidth: 2,
+          borderTopColor: "#FFFFFF",
+          borderLeftColor: "#FFFFFF",
+          borderRightColor: "#404040",
+          borderBottomColor: "#404040",
+          borderWidth: 2,
         },
+        tabBarLabelStyle: {
+          fontFamily: "system-ui",
+        },
+        tabBarActiveTintColor: "#000000",
+        tabBarInactiveTintColor: "#666666",
       }}
     >
       <Tabs.Screen

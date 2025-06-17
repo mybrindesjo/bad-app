@@ -7,7 +7,20 @@ import { CartProvider } from "../context/CartContext";
 // Separera Stack-navigeringen till en egen komponent
 function AppNavigator() {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#C0C0C0",
+        },
+        headerTintColor: "#000000",
+        headerTitleStyle: {
+          fontFamily: "system-ui",
+        },
+        contentStyle: {
+          backgroundColor: "#C0C0C0",
+        },
+      }}
+    >
       <Stack.Screen
         name="login"
         options={{

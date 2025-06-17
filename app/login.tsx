@@ -24,8 +24,9 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#C0C0C0',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    fontFamily: 'monospace',
   },
 });

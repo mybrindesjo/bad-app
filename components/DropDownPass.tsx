@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 interface DropdownPassProps {
@@ -30,16 +30,50 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
   };
 
   return (
-    <View>
-      <Text>Skriv ditt lösenord: {passwordParts.map(() => '*').join('')}</Text>
-      <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
-        <Picker.Item label="Välj" value="" />
-        {getNumbers().map((num) => (
-          <Picker.Item key={num} label={num} value={num} />
-        ))}
-      </Picker>
+    <View style={styles.container}>
+      <Text style={styles.label}>Skriv ditt lösenord: {passwordParts.map(() => '*').join('')}</Text>
+      <View style={styles.pickerContainer}>
+        <Picker 
+          selectedValue={selectedValue} 
+          onValueChange={handleSelection}
+          style={styles.picker}
+        >
+          <Picker.Item label="Välj" value="" />
+          {getNumbers().map((num) => (
+            <Picker.Item key={num} label={num} value={num} />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    marginVertical: 10,
+    backgroundColor: '#C0C0C0',
+  },
+  label: {
+    fontFamily: 'system-ui',
+    color: '#000000',
+    marginBottom: 5,
+    textAlign: 'left'
+  },
+  pickerContainer: {
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF',
+    backgroundColor: '#C0C0C0',
+  },
+  picker: {
+    backgroundColor: '#C0C0C0',
+    color: '#000000',
+    fontFamily: 'system-ui',
+    textAlign: 'left'
+  }
+});
 
 export default DropdownPass;

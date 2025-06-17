@@ -7,9 +7,9 @@ import { useCart } from "../../context/CartContext";
 import { useRouter } from "expo-router";
 
 const questions = [
-  { question: "Vilken typ av djur skulle du vara på en fest?", options: ["🦁 Lejon", "🦉 Uggla", "🐢 Sköldpadda", "🐍 Orm"] },
-  { question: "Om du kunde leva i en film, vilken skulle det vara?", options: ["🎥 Matrix", "🎭 Titanic", "🚀 Star Wars", "🎩 Alice i Underlandet"] },
-  { question: "Vilken är din föredragna typ av frukost?", options: ["🥞 Amerikanska pannkakor", "🥐 Croissant", "🍞 Rostad brödskiva", "🥣 Havregryn"] }
+  { question: "Vilken typ av djur skulle du vara på en fest?", options: ["Lejon", "Uggla", "Sköldpadda", "Orm"] },
+  { question: "Om du kunde leva i en film, vilken skulle det vara?", options: ["Matrix", "Titanic", "Star Wars", "Alice i Underlandet"] },
+  { question: "Vilken är din föredragna typ av frukost?", options: ["Amerikanska pannkakor", "Croissant", "Rostad brödskiva", "Havregryn"] }
 ];
 
 const fakeProducts = [
@@ -59,7 +59,7 @@ const ProfileScreen: React.FC = () => {
   };
 
   const generateProduct = () => {
-    setFinalProduct(`🎉 Grattis! Vi har lagt till produkterna i din varukorg! 😆`);
+    setFinalProduct(`Grattis! Vi har lagt till ${fakeProducts[0].name}, ${fakeProducts[1].name} och ${fakeProducts[2].name} i din varukorg!`);
     // Lägg till produkter i varukorgen med fördröjning
     setTimeout(() => {
       addItems(fakeProducts);
@@ -71,7 +71,7 @@ const ProfileScreen: React.FC = () => {
   };
 
   const handlePurchase = () => {
-    alert("Produkterna har lagts till i din varukorg! 🛒");
+    alert("Produkterna har lagts till i din varukorg!");
     setTimeout(() => {
       router.push("/cart");
     }, 1000);
@@ -83,7 +83,7 @@ const ProfileScreen: React.FC = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {user ? (
         <>
-          <Text style={styles.welcomeText}>Hej {user.email}! 🎉</Text>
+          <Text style={styles.welcomeText}>Hej {user.email}!</Text>
 
           {!questionComplete ? (
             <View style={styles.questionBox}>
@@ -96,7 +96,7 @@ const ProfileScreen: React.FC = () => {
             </View>
           ) : (
             <>
-              <Animated.Text style={[styles.confettiText, { opacity: confettiAnim }]}>🎊 Grattis! 🎊</Animated.Text>
+              <Animated.Text style={[styles.confettiText, { opacity: confettiAnim }]}>Grattis!</Animated.Text>
               <Text style={styles.finalProduct}>{finalProduct}</Text>
               <Button title="Till varukorgen!" onPress={handlePurchase} color="#0044CC" />
             </>
@@ -114,50 +114,62 @@ const styles = StyleSheet.create({
     flexGrow: 1, 
     justifyContent: "center", 
     alignItems: "center", 
-    padding: 20, 
-    backgroundColor: "#FFFFFF" 
+    padding: 20,
+    backgroundColor: '#C0C0C0'
   },
   loading: {
     fontSize: 18, 
-    color: "#888", 
-    textAlign: "center" 
+    color: "#000000", 
+    textAlign: "left",
+    fontFamily: "system-ui"
   },
   welcomeText: { 
     fontSize: 24, 
-    fontWeight: "bold", 
     marginBottom: 15, 
-    color: "#000", 
-    textAlign: "center" 
+    color: "#000000", 
+    textAlign: "left",
+    fontFamily: "system-ui"
   },
   questionBox: { 
     padding: 20, 
-    backgroundColor: "#f0f0f0", 
     alignItems: "center", 
-    width: "90%" 
+    width: "90%",
+    backgroundColor: '#C0C0C0',
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF'
   },
   question: { 
     fontSize: 20, 
-    fontWeight: "bold", 
     marginBottom: 15, 
     color: "#000", 
-    textAlign: "center" 
+    textAlign: "left",
+    fontFamily: "system-ui"
   },
   answerButton: { 
     marginVertical: 10, 
-    width: "100%" 
+    width: "100%",
+    backgroundColor: '#C0C0C0',
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF'
   }, 
   confettiText: { 
     fontSize: 28, 
-    fontWeight: "bold", 
-    color: "#0044CC", 
-    marginBottom: 15 
+    color: "#000000", 
+    marginBottom: 15,
+    fontFamily: "monospace"
   },
   finalProduct: { 
     fontSize: 20, 
-    fontWeight: "bold", 
-    color: "#0044CC", 
+    color: "#000000", 
     marginBottom: 15, 
-    textAlign: "center" 
+    textAlign: "left",
+    fontFamily: "system-ui"
   }
 });
 

@@ -76,42 +76,64 @@ const LoginForm: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: { 
-    padding: 20,
     gap: 10,
-    alignItems: "center",
+    alignItems: "flex-start",
+    width: '100%',
+    backgroundColor: '#C0C0C0'  // Changed to gray
   },
   title: { 
     fontSize: 24, 
     marginBottom: 10, 
-    color: "#007AFF",
+    color: "#000000",
+    fontFamily: "system-ui",
+    textAlign: "left"
   },
   button: { 
     padding: 15, 
-    backgroundColor: "#007AFF", 
+    backgroundColor: "#C0C0C0",  // Changed to gray
     alignItems: "center", 
-    width: 300,
+    width: '100%',
     marginTop: 10,
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF'
   },
   buttonText: { 
-    color: "#fff", 
+    color: "#000000", 
     fontSize: 16,
+    fontFamily: "system-ui",
+    textAlign: "left"
   },
   error: { 
-    color: "red", 
+    color: "#FF0000", 
     marginTop: 10,
+    fontFamily: "system-ui"
   },
   toggleContainer: { 
     flexDirection: "row", 
-    justifyContent: "center", 
+    justifyContent: "flex-start", 
     marginTop: 20,
+    backgroundColor: '#C0C0C0',  // Changed to gray
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF',
+    padding: 10,
   },
   toggleText: { 
-    color: "#007AFF", 
-    fontWeight: "bold",
+    color: "#000000", 
+    textDecorationLine: 'underline',
+    fontFamily: "system-ui",
+    textAlign: "left"
   },
   toggleTextWhite: { 
-    color: "#333",
-  },
+    color: "#000000",
+    fontFamily: "system-ui",
+    textAlign: "left"
+  }
 });
 
 export default LoginForm;
