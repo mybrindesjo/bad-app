@@ -66,6 +66,22 @@ const ProfileScreen: React.FC = () => {
     }, 2000);
   };
 
+  const getTranslatedQuestions = () => {
+    return [
+      {
+        question: translate('questions.colorQuestion'),
+        options: translations[language as keyof typeof translations].options?.colors || [],
+      },
+      {
+        question: translate('questions.toolQuestion'),
+        options: translations[language as keyof typeof translations].options?.tools || [],
+      },
+      // ...resten av frågorna
+    ];
+  };
+
+  const translatedQuestions = getTranslatedQuestions();
+
   if (loading) {
     return <Text style={styles.loading}>{translate('loading')}</Text>;
   }
@@ -76,8 +92,8 @@ const ProfileScreen: React.FC = () => {
         <>
           {!questionComplete ? (
             <View style={styles.questionBox}>
-              <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex].question}</Text>
-              {mandatoryQuestions[currentQuestionIndex].options.map((option, index) => (
+              <Text style={styles.text}>{translatedQuestions[currentQuestionIndex].question}</Text>
+              {translatedQuestions[currentQuestionIndex].options.map((option, index) => (
                 <Button key={index} title={option} onPress={handleNextQuestion} />
               ))}
             </View>

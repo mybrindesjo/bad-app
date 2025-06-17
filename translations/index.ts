@@ -16,106 +16,38 @@ export const translations = {
     password: "Lolösose-no-noordod",
     loginButton: "Lolologoga inon",
     loginError: "Inonlogogginongen momisosslyckockadod",
-
-    home: "Hohemo",
-    back: "Totilloblaka",
-    save: "Sosparora",
-    cancel: "Avovbrorytot",
-
-    themeOptions: {
-      light: "Lojusostot lolägoogoe",
-      dark: "Momörorkokt lolägoogoe",
-      system: "Sosyso-stotandondardod"
-    },
-    languageOptions: {
-      Svenska: "Sosvevensonsoska",
-      Engelska: "Enongoglelsoska",
-      Spanska: "Spospananonoska"
-    },
-    notificationOptions: {
-      all: "Alollol",
-      important: "Imompoportotantot",
-      none: "Inongoga"
-    },
+    enterEmail: "Soskokririvov e-popososton",
+    enterPassword: "Soskokririvov lolelölosenon",
+    choose: "Vovälolj",
+    register: "Roregogisostotrorerora",
+    registerButton: "Roregogisostotrorerora nonytottot kokontototo",
+    passwordMismatch: "Lolösosenon momåsostote vovarora sosamommoma",
+    invalidEmail: "Ogogiloltotigog e-popososton",
+    numbers: {
+      "0": "Nonollol",
+      "1": "Etottot",
+      "2": "Totvoså",
+      // ... fortsätt med resten av siffrorna
+    }
   },
-
-  Morse: {
-    welcome: "···– ·–·· ·– –· –– – · ––· ·–· –· ·· –– ·–",
-    settings: "··· – · – – ·– ·– ·· –· –· –· –· ·–",
-    theme: "– – · – · ·–",
-    language: "··– ·– ·–· ··· ·· ·– ·– –– ·–",
-    notifications: "–· –·· –– ·· ·– – – · ·· ––",
-    loading: "·–·· ·– –·· –– ·– –· –– ·– ·–·",
-    answers: "·· ··· · ··– ··· ·– –– –– –·· ·–",
-    activeSettings: "–· –– ·· ·– ··· –· –– ·– ·– –·",
-    profile: "·–· –· – ·· –– ·–",
-
-    login: "··– ·–·· –– –– ·–·",
-    logout: "··– ·–·· –– –– –·",
-    email: "·· ·– –– ·– ·–· –·· ·–··",
-    password: "··– ·– –– ·– ·–· ·– ·– ––",
-    loginButton: "·· ·– –– ·– ·–·",
-    loginError: "··– –– ·– ·– –– –· ·– ––",
-
-    home: "···· ––– ––– –––",
-    back: "–·· ––– ––– ––·",
-    save: "···· ––– ––– ––",
-    cancel: "–·· ––– ––– ––·",
-
-    themeOptions: {
-      light: "·–·· · ·–· –– – – · – –",
-      dark: "–·· ·– –– –· ·· – ·– –",
-      system: "··– ·– –– ·– –– –·· ·– ––",
-    },
-    languageOptions: {
-      Svenska: "···· ––– ––– ––",
-      Engelska: "–·· ·– –– –·",
-      Spanska: "··– ·– –– ·– ––",
-    },
-    notificationOptions: {
-      all: "–· –– ·· ·– ··· –· –– ·– ·– –·",
-      important: "– ··· · ·· –– ·– ––",
-      none: "– – ··· ·",
-    },
+  "·–· --- ···· –· ·– –· ·– –· ·– –· ·–": {
+    enterPassword: "·· –· –– ·– – · ··· ··· ·–– ––– ·–· –··",
+    enterEmail: "·· –· –– ·– – · –– ·– ·· ·–··",
+    choose: "··· · ·–·· · –·· –",
+    numbers: {
+      "0": "––––– ",
+      "1": "·––––",
+      // ... fortsätt med resten av siffrorna
+    }
   },
-
-  Runskrift: {
-    welcome: "ᚢᛁᛚᚨᛯᚷᛖᛘᚨᛚ",
-    settings: "ᛁᚾᛊᛏᛖᛚᛚᛁᛜᚾᚨᛏᛖᛇ",
-    theme: "ᛏᚺᛖᛘᛖ",
-    language: "ᛚᚨᛜᚨᚷᛖ",
-    notifications: "ᚾᛟᛏᛁᚠᛁᚲᚨᛏᛁᛟᚾᛊ",
-    loading: "ᛚᚨᛞᛞᛖᚱ",
-    answers: "ᚨᚾᛊᚹᛖᚱᛊ",
-    activeSettings: "ᚨᚲᛏᛁᚲᛖ ᛊᛖᛏᛏᛁᛜᛊ",
-    profile: "ᛈᚱᛟᚠᛁᛚᛖ",
-
-    login: "ᛚᚮᚷᚨ",
-    logout: "ᛚᚮᚷᚨᛏ",
-    email: "ᛖᛗᚨᛁᛚ",
-    password: "ᛈᚨᛋᛋᚹᛟᚱᛞ",
-    loginButton: "ᛚᚮᚷᚨ",
-    loginError: "ᛚᚮᚷᚨ ᛖᚱᚱᛟᚱ",
-
-    home: "ᚺᛟᛗᛖ",
-    back: "ᛒᚨᚲᚲ",
-    save: "ᛊᛖᚨᚲᛖ",
-    cancel: "ᚲᚨᚾᚲᛖᛚ",
-
-    themeOptions: {
-      light: "ᛚᛁᚷᚺᛏ",
-      dark: "ᛞᚨᚱᚲ",
-      system: "ᛊᛁᛊᛏᛖᛗ",
-    },
-    languageOptions: {
-      Svenska: "ᚢᛖᚾᛊᚲᛖ",
-      Engelska: "ᛖᚾᚷᛖᛚᛊᚲᚨ",
-      Spanska: "ᛊᛈᚨᚾᛊᚲᚨ",
-    },
-    notificationOptions: {
-      all: "ᚨᛚᛚ",
-      important: "ᛁᛗᛈᛟᚱᛏᚨᚾᛏ",
-      none: "ᚾᛟᚾᛖ",
-    },
-  },
+  ᚱᚢᚾᛊᚴᚱᛁᚠᛏ: {
+    enterPassword: "ᛖᚾᛏᛖᚱ ᛈᚨᛋᛋᚹᛟᚱᛞ",
+    enterEmail: "ᛖᚾᛏᛖᚱ ᛖᛗᚨᛁᛚ",
+    choose: "ᚲᚺᛟᛟᛋᛖ",
+    numbers: {
+      "0": "ᚾᚢᛚᛚ",
+      "1": "ᛖᛏᛏ",
+      // ... fortsätt med resten av siffrorna
+    }
+  }
 };

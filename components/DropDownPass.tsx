@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useSettings } from '../context/SettingsContext';
 
 interface DropdownPassProps {
   onPasswordChange: (password: string) => void;
 }
 
 const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
+  const { translate } = useSettings();
   const [passwordParts, setPasswordParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
@@ -33,11 +35,11 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
 
   return (
     <View>
-      <Text>Ditt lösenord: {'*'.repeat(passwordParts.length)}</Text>
+      <Text>{translate('enterPassword')}: {passwordParts.map(() => '*').join('')}</Text>
       <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
-        <Picker.Item label="Välj" value="" />
+        <Picker.Item label={translate('choose')} value="" />
         {numbers.map((num) => (
-          <Picker.Item key={num} label={num} value={num} />
+          <Picker.Item key={num} label={num === "⌫" ? "⌫" : translate(`numbers.${num}`)} value={num} />
         ))}
       </Picker>
     </View>

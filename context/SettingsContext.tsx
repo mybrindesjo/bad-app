@@ -5,10 +5,6 @@ const themeColors = {
   'Ljus': '#4c6eff',
   'Mörk': '#956388',
   'Systemstandard': '#fff94c',
-  'Röd': '#ffffff',
-  'Blå': '#4cff87',
-  'Grön': '#ff4c4c',
-  'Gul': '#333333',
 };
 
 type SettingsContextType = {
@@ -26,7 +22,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState({
     theme: 'Systemstandard',
-    language: 'Rövarspråk', // Ändra default språk
+    language: 'Rorövovarorsospoprokroråkok', // Uppdaterat standardspråk
     notifications: 'Alla',
     volume: 'Medel',
   });
@@ -41,7 +37,8 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const translate = (key: string) => {
     const currentLang = settings.language;
-    const translation = translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)["Rövarspråk"]];
+    // Uppdatera typningen för att matcha det nya standardspråket
+    const translation = translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)['Rorövovarorsospoprokroråkok']];
     return typeof translation === "string" ? translation : key;
   };
 
