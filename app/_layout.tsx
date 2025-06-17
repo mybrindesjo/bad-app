@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "../context/AuthContext";
 import { SettingsProvider } from "../context/SettingsContext";
+import { CartProvider } from "../context/CartContext";
 
 // Separera Stack-navigeringen till en egen komponent
 function AppNavigator() {
@@ -43,7 +44,9 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <SettingsProvider>
-        <AppNavigator />
+        <CartProvider>
+          <AppNavigator />
+        </CartProvider>
       </SettingsProvider>
     </AuthProvider>
   );

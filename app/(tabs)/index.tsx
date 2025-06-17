@@ -3,6 +3,8 @@ import { View, Text, Button, StyleSheet, Animated, ScrollView } from "react-nati
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
+import { useCart } from "../../context/CartContext";
+import { useRouter } from "expo-router";
 
 const questions = [
   { question: "Vilken typ av djur skulle du vara på en fest?", options: ["🦁 Lejon", "🦉 Uggla", "🐢 Sköldpadda", "🐍 Orm"] },
@@ -10,10 +12,22 @@ const questions = [
   { question: "Vilken är din föredragna typ av frukost?", options: ["🥞 Amerikanska pannkakor", "🥐 Croissant", "🍞 Rostad brödskiva", "🥣 Havregryn"] }
 ];
 
-const fakeAnswers = [
-  "En flammande LED-lampa formad som en groda",
-  "En vattenfast spelkontroll med en hemlig knapp",
-  "En brödrost med inbyggd högtalare och blinkande lysdioder"
+const fakeProducts = [
+  { 
+    name: "Flammande LED-lampa formad som en groda",
+    price: 399,
+    image: "../../img/product1.png"
+  },
+  { 
+    name: "Vattenfast spelkontroll med en hemlig knapp",
+    price: 599,
+    image: "../../img/product2.png"
+  },
+  { 
+    name: "Brödrost med inbyggd högtalare och blinkande lysdioder",
+    price: 499,
+    image: "../../img/product3.png"
+  }
 ];
 
 const ProfileScreen: React.FC = () => {
@@ -23,6 +37,8 @@ const ProfileScreen: React.FC = () => {
   const [questionComplete, setQuestionComplete] = useState(false);
   const [finalProduct, setFinalProduct] = useState("");
   const confettiAnim = new Animated.Value(0);
+  const { addItems } = useCart();
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -43,11 +59,22 @@ const ProfileScreen: React.FC = () => {
   };
 
   const generateProduct = () => {
-    setFinalProduct(`🎉 Grattis! Vi har lagt till ${fakeAnswers[0]}, ${fakeAnswers[1]} och ${fakeAnswers[2]} i din varukorg! 😆`);
+    setFinalProduct(`🎉 Grattis! Vi har lagt till produkterna i din varukorg! 😆`);
+    // Lägg till produkter i varukorgen med fördröjning
+    setTimeout(() => {
+      addItems(fakeProducts);
+    }, 2000);
   };
 
   const startConfetti = () => {
     Animated.timing(confettiAnim, { toValue: 1, duration: 1000, useNativeDriver: true }).start();
+  };
+
+  const handlePurchase = () => {
+    alert("Produkterna har lagts till i din varukorg! 🛒");
+    setTimeout(() => {
+      router.push("/cart");
+    }, 1000);
   };
 
   if (loading) return <Text style={styles.loading}>Analyserar dina val... och ignorerar dem.</Text>;
@@ -71,7 +98,7 @@ const ProfileScreen: React.FC = () => {
             <>
               <Animated.Text style={[styles.confettiText, { opacity: confettiAnim }]}>🎊 Grattis! 🎊</Animated.Text>
               <Text style={styles.finalProduct}>{finalProduct}</Text>
-              <Button title="Köp nu!" onPress={() => alert("Din order har lagts! 😆")} color="#0044CC" />
+              <Button title="Till varukorgen!" onPress={handlePurchase} color="#0044CC" />
             </>
           )}
         </>
