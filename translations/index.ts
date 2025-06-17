@@ -17,7 +17,6 @@ export const translations = {
     loginButton: "Lolologoga inon",
     loginError: "Inonlogogginongen momisosslyckockadod",
     enterEmail: "Soskokririvov e-popososton",
-    enterPassword: "Soskokririvov lolelölosenon",
     choose: "Vovälolj",
     register: "Roregogisostotrorerora",
     registerButton: "Roregogisostotrorerora nonytottot kokontototo",
