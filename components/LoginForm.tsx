@@ -5,7 +5,6 @@ import { auth } from "../firebase/firebase-config";
 import { useRouter } from "expo-router";
 import Dropdown from "./DropDownEmail";
 import DropdownPass from "./DropDownPass";
-import { useSettings } from "../context/SettingsContext";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -16,7 +15,6 @@ const LoginForm: React.FC = () => {
 
   const router = useRouter();
   const buttonPosition = new Animated.Value(0);
-  const { translate } = useSettings();
 
   useLayoutEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -35,19 +33,19 @@ const LoginForm: React.FC = () => {
         await signInWithEmailAndPassword(auth, email, password);
       } else {
         if (!email.includes("@")) {
-          throw new Error(translate("invalidEmail"));
+          throw new Error("Ogiltig e-postadress");
         }
         await createUserWithEmailAndPassword(auth, email, password);
-        Alert.alert(translate("registered"), translate("loggedIn"));
+        Alert.alert("Registrerad", "Du är nu inloggad!");
       }
     } catch (error) {
-      setError((error as Error).message || translate("registrationFailed"));
+      setError((error as Error).message || "Registreringen misslyckades");
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{isLogin ? translate("login") : translate("register")}</Text>
+      <Text style={styles.title}>{isLogin ? "Logga in" : "Registrera"}</Text>
       
       <Dropdown onEmailChange={setEmail} />
       <DropdownPass onPasswordChange={setPassword} />
@@ -56,14 +54,20 @@ const LoginForm: React.FC = () => {
 
       <Animated.View style={{ transform: [{ translateX: buttonPosition }] }}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>{isLogin ? translate("loginButton") : translate("registerButton")}</Text>
+          <Text style={styles.buttonText}>
+            {isLogin ? "Logga in" : "Registrera konto"}
+          </Text>
         </TouchableOpacity>
       </Animated.View>
 
       <View style={styles.toggleContainer}>
-        <Text style={styles.toggleTextWhite}>{isLogin ? translate("noAccount") : translate("alreadyAccount")}</Text>
+        <Text style={styles.toggleTextWhite}>
+          {isLogin ? "Inget konto?" : "Har redan ett konto?"}
+        </Text>
         <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
-          <Text style={styles.toggleText}>{isLogin ? translate("registerHere") : translate("loginHere")}</Text>
+          <Text style={styles.toggleText}>
+            {isLogin ? "Registrera här" : "Logga in här"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

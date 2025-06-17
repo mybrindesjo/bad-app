@@ -27,6 +27,12 @@ function AppNavigator() {
           title: "Fel",
         }}
       />
+      <Stack.Screen
+        name="cart"
+        options={{
+          title: "Varukorg",
+        }}
+      />
       <StatusBar style="auto" />
     </Stack>
   );

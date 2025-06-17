@@ -3,12 +3,10 @@ import React, { useEffect } from "react";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../../context/AuthContext";
-import { useSettings } from "../../context/SettingsContext";
 
 export default function TabLayout() {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const { getThemeColor, translate } = useSettings();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -29,15 +27,15 @@ export default function TabLayout() {
             },
             default: {},
           }),
-          backgroundColor: getThemeColor(),
+          backgroundColor: "#FFFFFF",
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: translate("profile"),
-          tabBarLabel: translate("profile"),
+          title: "Profil",
+          tabBarLabel: "Profil",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
@@ -45,12 +43,12 @@ export default function TabLayout() {
       />
       {user && (
         <Tabs.Screen
-          name="settings"
+          name="cart"
           options={{
-            title: translate("settings"),
-            tabBarLabel: translate("settings"),
+            title: "Varukorg",
+            tabBarLabel: "Varukorg",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="settings-outline" size={size} color={color} />
+              <Ionicons name="cart-outline" size={size} color={color} />
             ),
           }}
         />

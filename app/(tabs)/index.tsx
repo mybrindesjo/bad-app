@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Animated, ScrollView } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
 
-const mandatoryQuestions = [
-  { question: "Vad är din favoritfärg på en tisdagseftermiddag?", options: ["Blå", "Röd", "Grön", "Gul"] },
-  { question: "Om du var ett köksredskap, vilket skulle du vara?", options: ["Kniv", "Gaffel", "Visp", "Brödrost"] },
-  { question: "Hur många gånger har du blinkat idag?", options: ["10", "100", "1000", "Jag har aldrig blinkat"] },
-  { question: "Vilken låt lyssnade du på idag?", options: ["Bohemian Rhapsody", "Despacito", "Never Gonna Give You Up", "Baby Shark"] },
-  { question: "Om du fick välja mellan ost och tomat – varför?", options: ["Ost är kung!", "Tomat är liv!", "Ingen av dem", "Allt på en pizza"] },
-  { question: "Skriv en dikt om en osynlig giraff.", options: ["Den är lång och smal", "Den finns inte alls", "Den springer genom natten", "Den dricker kaffe"] }
+const questions = [
+  { question: "Vilken typ av djur skulle du vara på en fest?", options: ["🦁 Lejon", "🦉 Uggla", "🐢 Sköldpadda", "🐍 Orm"] },
+  { question: "Om du kunde leva i en film, vilken skulle det vara?", options: ["🎥 Matrix", "🎭 Titanic", "🚀 Star Wars", "🎩 Alice i Underlandet"] },
+  { question: "Vilken är din föredragna typ av frukost?", options: ["🥞 Amerikanska pannkakor", "🥐 Croissant", "🍞 Rostad brödskiva", "🥣 Havregryn"] }
 ];
 
 const fakeAnswers = [
-  "Neonrosa",
-  "Slev",
-  "5000 gånger",
-  "Nationalsången",
-  "Jag vägrar svara på denna fråga",
-  "Jag har aldrig sett en giraff"
+  "En flammande LED-lampa formad som en groda",
+  "En vattenfast spelkontroll med en hemlig knapp",
+  "En brödrost med inbyggd högtalare och blinkande lysdioder"
 ];
 
 const ProfileScreen: React.FC = () => {
@@ -27,6 +21,8 @@ const ProfileScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionComplete, setQuestionComplete] = useState(false);
+  const [finalProduct, setFinalProduct] = useState("");
+  const confettiAnim = new Animated.Value(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -37,97 +33,70 @@ const ProfileScreen: React.FC = () => {
   }, []);
 
   const handleNextQuestion = () => {
-    setTimeout(() => {
-      if (currentQuestionIndex < mandatoryQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        setQuestionComplete(true);
-      }
-    }, 2000);
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setQuestionComplete(true);
+      generateProduct();
+      startConfetti();
+    }
   };
 
-  if (loading) {
-    return <Text style={styles.loading}>Laddar...</Text>;
-  }
+  const generateProduct = () => {
+    setFinalProduct(`🎉 Grattis! Vi har lagt till ${fakeAnswers[0]}, ${fakeAnswers[1]} och ${fakeAnswers[2]} i din varukorg! 😆`);
+  };
+
+  const startConfetti = () => {
+    Animated.timing(confettiAnim, { toValue: 1, duration: 1000, useNativeDriver: true }).start();
+  };
+
+  if (loading) return <Text style={styles.loading}>Analyserar dina val... och ignorerar dem.</Text>;
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {user ? (
         <>
+          <Text style={styles.welcomeText}>Hej {user.email}! 🎉</Text>
+
           {!questionComplete ? (
             <View style={styles.questionBox}>
-              <Text style={styles.text}>{mandatoryQuestions[currentQuestionIndex].question}</Text>
-              {mandatoryQuestions[currentQuestionIndex].options.map((option, index) => (
-                <Button key={index} title={option} onPress={handleNextQuestion} />
+              <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
+              {questions[currentQuestionIndex].options.map((option, index) => (
+                <View key={index} style={styles.answerButton}>
+                  <Button title={option} onPress={handleNextQuestion} />
+                </View>
               ))}
             </View>
           ) : (
             <>
-              <Text style={styles.text}>Välkommen {user.email}! 👋</Text>
-              <Text style={styles.subtext}>Här är dina svar:</Text>
-              {mandatoryQuestions.map((question, index) => (
-                <View key={index} style={styles.answerBox}>
-                  <Text style={styles.question}>{question.question}</Text>
-                  <Text style={styles.answer}>{fakeAnswers[index]}</Text>
-                </View>
-              ))}
+              <Animated.Text style={[styles.confettiText, { opacity: confettiAnim }]}>🎊 Grattis! 🎊</Animated.Text>
+              <Text style={styles.finalProduct}>{finalProduct}</Text>
+              <Button title="Köp nu!" onPress={() => alert("Din order har lagts! 😆")} color="#0044CC" />
             </>
           )}
         </>
       ) : (
         <LoginForm />
       )}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+  container: { 
+    flexGrow: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    padding: 20, 
+    backgroundColor: "#FFFFFF" 
   },
-  loading: {
-    fontSize: 18,
-    color: "#888",
-  },
-  questionBox: {
-    width: "90%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 20,
-    backgroundColor: "#f9f9f9",
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000",
-    textAlign: "center",
-    backgroundColor: "#f0f0f0",
-    padding: 20,
-    borderRadius: 10,
-    borderBlockColor: "#ccc",
-  },
-  subtext: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 10,
-  },
-  answerBox: {
-    backgroundColor: "#eef",
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-    width: "90%",
-  },
-  question: {
-    fontWeight: "bold",
-  },
-  answer: {
-    color: "#333",
-  },
+  loading: { fontSize: 18, color: "#888", textAlign: "center" },
+  welcomeText: { fontSize: 24, fontWeight: "bold", marginBottom: 15, color: "#000", textAlign: "center" },
+  questionBox: { padding: 20, borderRadius: 10, backgroundColor: "#f0f0f0", alignItems: "center", width: "90%" },
+  question: { fontSize: 20, fontWeight: "bold", marginBottom: 15, color: "#000", textAlign: "center" },
+  answerButton: { marginVertical: 10, width: "100%" }, 
+  confettiText: { fontSize: 28, fontWeight: "bold", color: "#0044CC", marginBottom: 15 },
+  finalProduct: { fontSize: 20, fontWeight: "bold", color: "#0044CC", marginBottom: 15, textAlign: "center" }
 });
 
 export default ProfileScreen;
