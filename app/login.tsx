@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#C0C0C0',
     justifyContent: 'center',
     alignItems: 'center',
-    fontFamily: 'monospace',
+    fontFamily: 'Courier', // Changed from monospace
   },
 });

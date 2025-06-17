@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, Animated, ScrollView } from "react-native";
+import { View, Text, Button, StyleSheet, Animated, ScrollView, TouchableOpacity } from "react-native";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import LoginForm from "../../components/LoginForm";
@@ -98,7 +98,12 @@ const ProfileScreen: React.FC = () => {
             <>
               <Animated.Text style={[styles.confettiText, { opacity: confettiAnim }]}>Grattis!</Animated.Text>
               <Text style={styles.finalProduct}>{finalProduct}</Text>
-              <Button title="Till varukorgen!" onPress={handlePurchase} color="#0044CC" />
+              <TouchableOpacity 
+                style={styles.toCartButton} 
+                onPress={handlePurchase}
+              >
+                <Text style={styles.toCartButtonText}>Till varukorgen</Text>
+              </TouchableOpacity>
             </>
           )}
         </>
@@ -121,14 +126,14 @@ const styles = StyleSheet.create({
     fontSize: 18, 
     color: "#000000", 
     textAlign: "left",
-    fontFamily: "system-ui"
+    fontFamily: "Courier"  // Changed from system-ui
   },
   welcomeText: { 
     fontSize: 24, 
     marginBottom: 15, 
     color: "#000000", 
     textAlign: "left",
-    fontFamily: "system-ui"
+    fontFamily: "Courier"  // Changed from system-ui
   },
   questionBox: { 
     padding: 20, 
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
     marginBottom: 15, 
     color: "#000", 
     textAlign: "left",
-    fontFamily: "system-ui"
+    fontFamily: "Courier"  // Changed from system-ui
   },
   answerButton: { 
     marginVertical: 10, 
@@ -162,15 +167,33 @@ const styles = StyleSheet.create({
     fontSize: 28, 
     color: "#000000", 
     marginBottom: 15,
-    fontFamily: "monospace"
+    fontFamily: "Courier"  // Changed from monospace
   },
   finalProduct: { 
     fontSize: 20, 
     color: "#000000", 
     marginBottom: 15, 
     textAlign: "left",
-    fontFamily: "system-ui"
-  }
+    fontFamily: "Courier"  // Changed from system-ui
+  },
+  toCartButton: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginTop: 20,
+    backgroundColor: '#C0C0C0',
+    borderWidth: 2,
+    borderRightColor: '#404040',
+    borderBottomColor: '#404040',
+    borderLeftColor: '#FFFFFF',
+    borderTopColor: '#FFFFFF',
+    padding: 10,
+    width: "100%",
+  },
+  toCartButtonText: {
+    color: "#000000",
+    fontFamily: "Courier",
+    fontSize: 16,
+  },
 });
 
 export default ProfileScreen;

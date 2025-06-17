@@ -14,7 +14,7 @@ function AppNavigator() {
         },
         headerTintColor: "#000000",
         headerTitleStyle: {
-          fontFamily: "system-ui",
+          fontFamily: "Courier", // Changed from system-ui
         },
         contentStyle: {
           backgroundColor: "#C0C0C0",
