@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 
 const themeColors = {
-  'Ljus': '#ffffff',
-  'Mörk': '#1a1a1a',
-  'Systemstandard': '#f0f0f0',
-  'Röd': '#ff4c4c',
-  'Blå': '#4c6eff',
-  'Grön': '#4cff87',
-  'Gul': '#fff94c',
+  'Ljus': '#4c6eff',
+  'Mörk': '#956388',
+  'Systemstandard': '#fff94c',
+  'Röd': '#ffffff',
+  'Blå': '#4cff87',
+  'Grön': '#ff4c4c',
+  'Gul': '#333333',
 };
 
 type SettingsContextType = {
