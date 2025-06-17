@@ -117,13 +117,48 @@ const styles = StyleSheet.create({
     padding: 20, 
     backgroundColor: "#FFFFFF" 
   },
-  loading: { fontSize: 18, color: "#888", textAlign: "center" },
-  welcomeText: { fontSize: 24, fontWeight: "bold", marginBottom: 15, color: "#000", textAlign: "center" },
-  questionBox: { padding: 20, borderRadius: 10, backgroundColor: "#f0f0f0", alignItems: "center", width: "90%" },
-  question: { fontSize: 20, fontWeight: "bold", marginBottom: 15, color: "#000", textAlign: "center" },
-  answerButton: { marginVertical: 10, width: "100%" }, 
-  confettiText: { fontSize: 28, fontWeight: "bold", color: "#0044CC", marginBottom: 15 },
-  finalProduct: { fontSize: 20, fontWeight: "bold", color: "#0044CC", marginBottom: 15, textAlign: "center" }
+  loading: {
+    fontSize: 18, 
+    color: "#888", 
+    textAlign: "center" 
+  },
+  welcomeText: { 
+    fontSize: 24, 
+    fontWeight: "bold", 
+    marginBottom: 15, 
+    color: "#000", 
+    textAlign: "center" 
+  },
+  questionBox: { 
+    padding: 20, 
+    backgroundColor: "#f0f0f0", 
+    alignItems: "center", 
+    width: "90%" 
+  },
+  question: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    marginBottom: 15, 
+    color: "#000", 
+    textAlign: "center" 
+  },
+  answerButton: { 
+    marginVertical: 10, 
+    width: "100%" 
+  }, 
+  confettiText: { 
+    fontSize: 28, 
+    fontWeight: "bold", 
+    color: "#0044CC", 
+    marginBottom: 15 
+  },
+  finalProduct: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    color: "#0044CC", 
+    marginBottom: 15, 
+    textAlign: "center" 
+  }
 });
 
 export default ProfileScreen;

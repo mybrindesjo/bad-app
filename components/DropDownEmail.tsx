@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useSettings } from '../context/SettingsContext';
 
 interface DropdownProps {
   onEmailChange: (email: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ onEmailChange }) => {
-  const { translate } = useSettings();
   const [emailParts, setEmailParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // Standard teckenlista
+  // Character list
   const getCharacters = () => {
     return [
       ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
@@ -28,17 +26,17 @@ const Dropdown: React.FC<DropdownProps> = ({ onEmailChange }) => {
     setSelectedValue(value);
     
     if (value === "⌫") {
-      setEmailParts((prev) => prev.slice(0, -1)); // Tar bort sista tecknet
+      setEmailParts((prev) => prev.slice(0, -1)); // Remove last character
     } else {
-      setEmailParts((prev) => [...prev, value]); // Lägger till vald bokstav
+      setEmailParts((prev) => [...prev, value]); // Add selected character
     }
   };
 
   return (
     <View>
-      <Text>{translate('enterEmail')}: {emailParts.join('')}</Text>
+      <Text>Skriv din e-post: {emailParts.join('')}</Text>
       <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
-        <Picker.Item label={translate('choose')} value="" />
+        <Picker.Item label="Välj" value="" />
         {getCharacters().map((char) => (
           <Picker.Item key={char} label={char} value={char} />
         ))}

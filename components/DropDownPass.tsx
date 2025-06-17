@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useSettings } from '../context/SettingsContext';
 
 interface DropdownPassProps {
   onPasswordChange: (password: string) => void;
 }
 
 const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
-  const { translate } = useSettings();
   const [passwordParts, setPasswordParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // Standard sifferlista inklusive ⌫
+  // Standard number list including ⌫
   const getNumbers = () => {
     return [...Array.from({ length: 10 }, (_, i) => i.toString()), "⌫"];
   };
@@ -25,17 +23,17 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
     setSelectedValue(value);
     
     if (value === "⌫") {
-      setPasswordParts((prev) => prev.slice(0, -1)); // Tar bort sista siffran
+      setPasswordParts((prev) => prev.slice(0, -1)); // Remove last digit
     } else {
-      setPasswordParts((prev) => [...prev, value]); // Lägger till vald siffra
+      setPasswordParts((prev) => [...prev, value]); // Add selected digit
     }
   };
 
   return (
     <View>
-      <Text>{translate('enterPassword')}: {passwordParts.map(() => '*').join('')}</Text>
+      <Text>Skriv ditt lösenord: {passwordParts.map(() => '*').join('')}</Text>
       <Picker selectedValue={selectedValue} onValueChange={handleSelection}>
-        <Picker.Item label={translate('choose')} value="" />
+        <Picker.Item label="Välj" value="" />
         {getNumbers().map((num) => (
           <Picker.Item key={num} label={num} value={num} />
         ))}

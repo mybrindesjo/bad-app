@@ -22,7 +22,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState({
     theme: 'Systemstandard',
-    language: 'Rorövovarorsospoprokroråkok', // Uppdaterat standardspråk
+    language: 'Svenska', // Added language property with a default value
     notifications: 'Alla',
     volume: 'Medel',
   });
