@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { translations } from '../translations';
 
 const themeColors = {
   'Ljus': '#4c6eff',
@@ -22,7 +21,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState({
     theme: 'Systemstandard',
-    language: 'Svenska', // Added language property with a default value
+    language: 'Svenska',
     notifications: 'Alla',
     volume: 'Medel',
   });
@@ -37,7 +36,6 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const translate = (key: string) => {
     const currentLang = settings.language;
-    // Uppdatera typningen för att matcha det nya standardspråket
     const translation = translations[currentLang as keyof typeof translations]?.[key as keyof (typeof translations)['Rorövovarorsospoprokroråkok']];
     return typeof translation === "string" ? translation : key;
   };

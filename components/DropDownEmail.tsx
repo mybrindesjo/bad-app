@@ -10,7 +10,6 @@ const Dropdown: React.FC<DropdownProps> = ({ onEmailChange }) => {
   const [emailParts, setEmailParts] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // Character list
   const getCharacters = () => {
     return [
       ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
@@ -26,9 +25,9 @@ const Dropdown: React.FC<DropdownProps> = ({ onEmailChange }) => {
     setSelectedValue(value);
     
     if (value === "⌫") {
-      setEmailParts((prev) => prev.slice(0, -1)); // Remove last character
+      setEmailParts((prev) => prev.slice(0, -1)); 
     } else {
-      setEmailParts((prev) => [...prev, value]); // Add selected character
+      setEmailParts((prev) => [...prev, value]);
     }
   };
 

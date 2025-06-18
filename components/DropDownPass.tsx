@@ -22,9 +22,9 @@ const DropdownPass: React.FC<DropdownPassProps> = ({ onPasswordChange }) => {
     setSelectedValue(value);
     
     if (value === "⌫") {
-      setPasswordParts((prev) => prev.slice(0, -1)); // Remove last digit
+      setPasswordParts((prev) => prev.slice(0, -1)); 
     } else {
-      setPasswordParts((prev) => [...prev, value]); // Add selected digit
+      setPasswordParts((prev) => [...prev, value]);
     }
   };
 

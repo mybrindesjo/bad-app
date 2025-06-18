@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "flex-start",
     width: '100%',
-    backgroundColor: '#C0C0C0'  // Changed to gray
+    backgroundColor: '#C0C0C0' 
   },
   title: { 
     fontSize: 24, 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   button: { 
     padding: 15, 
-    backgroundColor: "#C0C0C0",  // Changed to gray
+    backgroundColor: "#C0C0C0", 
     alignItems: "center", 
     width: '100%',
     marginTop: 10,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   error: { 
-    color: "#000000",  // Changed from "#FF0000"
+    color: "#000000",
     marginTop: 10,
     fontFamily: "Courier"
   },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     justifyContent: "flex-start", 
     marginTop: 20,
-    backgroundColor: '#C0C0C0',  // Changed to gray
+    backgroundColor: '#C0C0C0', 
     borderWidth: 2,
     borderRightColor: '#404040',
     borderBottomColor: '#404040',
